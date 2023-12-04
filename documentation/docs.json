@@ -1,0 +1,213 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "version": "8.12.0",
+        "title": "@fastify/swagger"
+    },
+    "components": {
+        "securitySchemes": {
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie",
+                "name": "__Secure-Authorization",
+                "description": "Default cookie authorization"
+            }
+        },
+        "schemas": {
+            "def-0": {
+                "type": "string",
+                "minLength": 32,
+                "maxLength": 32,
+                "title": "authentication"
+            },
+            "def-1": {
+                "type": "string",
+                "title": "login"
+            },
+            "def-2": {
+                "type": "string",
+                "title": "password"
+            }
+        }
+    },
+    "paths": {
+        "/serverstatus": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Default Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "metrics": {
+                                            "type": "object",
+                                            "properties": {
+                                                "eventLoopDelay": {
+                                                    "type": "number"
+                                                },
+                                                "rssBytes": {
+                                                    "type": "number"
+                                                },
+                                                "heapUsed": {
+                                                    "type": "number"
+                                                },
+                                                "eventLoopUtilized": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        },
+                                        "uptime": {
+                                            "type": "number"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/favicon.ico": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            }
+        },
+        "/apple-touch-icon.png": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            }
+        },
+        "/robots.txt": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            }
+        },
+        "/sitemap.xml": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            }
+        },
+        "/validate": {
+            "get": {
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "login",
+                        "required": true
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "password",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Default Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "valid"
+                                    ],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "valid": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "login",
+                                    "password",
+                                    "authentication"
+                                ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "login": {
+                                        "$ref": "#/components/schemas/def-1"
+                                    },
+                                    "password": {
+                                        "$ref": "#/components/schemas/def-2"
+                                    },
+                                    "authentication": {
+                                        "$ref": "#/components/schemas/def-0"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            }
+        }
+    },
+    "servers": {
+        "url": "https://localhost.xyz",
+        "description": "Main server"
+    }
+}

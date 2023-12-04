@@ -1,0 +1,17 @@
+:root, ::backdrop
+{
+    --brand-color: hsl(210, 10%, 23%);
+    --background-color: hsl(223, 30%, 95%);
+    --surface-color: hsl(189, 53%, 88%);
+    --border-color: hsl(188, 53%, 83%);
+
+    --text-major-color: hsl(189, 78%, 21%);
+    --text-minor-color: hsl(0, 0%, 46%);
+    --text-placeholder-color: hsl(219, 12%, 56%);
+
+    color-scheme: light;
+    
+    --font-size-regular:  16px;
+    --font-size-medium:   20px;
+    --font-size-big:      40px;
+}

@@ -1,0 +1,120 @@
+@layer normalization
+{
+    :root, ::backdrop
+    {
+        --color-red: hsl(354, 70%, 44%);
+        --color-red-hover: hsl(354, 70%, 46%);
+
+        --color-blue: hsl(211, 100%, 50%);
+        --color-blue-hover: hsl(211, 100%, 43%);
+
+        --color-green: hsl(134, 61%, 41%);
+        --color-green-hover: hsl(133, 61%, 33%);
+    }
+
+    :root, ::backdrop
+    {
+        --line-height: 1.66;
+        --outline-width: 2px;
+
+        --sizing-interactive: calc(3 * var(--outline-width));
+        --sizing-regular:     var(--font-size-regular);
+        --sizing-medium:      var(--font-size-medium);
+        --sizing-big:         var(--font-size-big);
+
+        --padding-vertical-interactive: calc(var(--sizing-interactive) / 1.25);
+        --padding-vertical-regular:     calc(var(--sizing-regular)     / 1.25);
+        --padding-vertical-medium:      calc(var(--sizing-medium)      / 1.25);
+        --padding-vertical-big:         calc(var(--sizing-big)         / 1.25);
+
+        --padding-horizontal-interactive: calc(var(--sizing-interactive) / 0.75);
+        --padding-horizontal-regular:     calc(var(--sizing-regular)     / 0.75);
+        --padding-horizontal-medium:      calc(var(--sizing-medium)      / 0.75);
+        --padding-horizontal-big:         calc(var(--sizing-big)         / 0.75);
+
+        --padding-interactive: var(--padding-vertical-interactive) var(--padding-horizontal-interactive);
+        --padding-regular:     var(--padding-vertical-regular)     var(--padding-horizontal-regular);
+        --padding-medium:      var(--padding-vertical-medium)      var(--padding-horizontal-medium);
+        --padding-big:         var(--padding-vertical-big)         var(--padding-horizontal-big);
+
+        --margin-vertical-interactive: calc(var(--sizing-interactive) / 0.75);
+        --margin-vertical-regular:     calc(var(--sizing-regular)     / 0.75);
+        --margin-vertical-medium:      calc(var(--sizing-medium)      / 0.75);
+        --margin-vertical-big:         calc(var(--sizing-big)         / 0.75);
+        
+        --margin-horizontal-interactive: calc(2.00 * var(--sizing-interactive));
+        --margin-horizontal-regular:     calc(2.00 * var(--sizing-regular));
+        --margin-horizontal-medium:      calc(2.00 * var(--sizing-medium));
+        --margin-horizontal-big:         calc(2.00 * var(--sizing-big));
+
+        --margin-interactive: var(--margin-vertical-interactive) var(--margin-horizontal-interactive);
+        --margin-regular:     var(--margin-vertical-regular)     var(--margin-horizontal-regular);
+        --margin-medium:      var(--margin-vertical-medium)      var(--margin-horizontal-medium);
+        --margin-big:         var(--margin-vertical-big)         var(--margin-horizontal-big);
+        
+        --interactive-min-width: 180px;
+        --interactive-min-height: 50px;
+
+        --border-radius-small: 5px;
+        --border-radius-regular: 10px;
+    }
+    
+    *, *::before, *::after { padding: 0; margin: 0; box-sizing: border-box; text-indent: 0; }
+    * { font-family: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; }
+    body
+    {
+        min-height: 100vh; background: var(--background-color); color: var(--text-major-color);
+        font-family: sans-serif; font-size: var(--font-size-regular); font-weight: 400; line-height: var(--line-height);
+    }
+
+    img, picture { flex-shrink: 0; max-inline-size: 100%; display: block; overflow: hidden; }
+    img:not([alt]) { outline: 10px solid red; }
+
+    button { appearance: button; }
+    div { position: relative; }
+
+    strong { font-weight: 700; }
+
+    hr { margin: var(--margin-vertical-regular) 0; border: none; background-color: var(--border-color); height: 1px; }
+
+    [hidden], input[type=hidden] { display: none !important; content-visibility: hidden !important; }
+    @media (min-width: 1000px)
+    {
+        .desktop_hidden { display: none !important; }
+    }
+}
+
+@layer headings
+{
+    h1, h2, h3 { color: var(--text-major-color); }
+    h1 { font-size: var(--font-size-big); font-weight: 700; }
+    h2 { font-size: var(--font-size-medium); font-weight: 600; }
+}
+
+@layer inputs
+{
+    input:not([type='checkbox']), select, textarea
+    {
+        display: block; min-width: var(--interactive-min-width); width: 100%; min-height: var(--interactive-min-height); padding: var(--padding-regular);
+        background-color: var(--background-color); border: thin solid var(--border-color); border-radius: var(--border-radius-regular);
+        color: var(--text-major-color); font-size: var(--font-size-regular);
+    }
+    ::placeholder { color: var(--text-minor-color); opacity: 1; }
+    
+    select { border: none; border-right: var(--padding-horizontal-regular) solid transparent !important; box-shadow: 0 0 0 1px var(--border-color); }
+}
+
+@layer labels
+{
+    label { display: block; width: 100%; margin: var(--margin-vertical-interactive) 0; color: var(--text-minor-color); }
+}
+
+@layer buttons
+{
+    button
+    {
+        display: block; min-width: var(--interactive-min-width); width: 100%; min-height: var(--interactive-min-height); padding: var(--padding-regular);
+        background-color: var(--brand-color); border: thin solid transparent; border-radius: var(--border-radius-regular);
+        text-align: center; font-size: var(--font-size-regular);
+    }
+}
