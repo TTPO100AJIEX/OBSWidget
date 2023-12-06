@@ -87,7 +87,7 @@ async function register(app, options)
         body:
         {
             type: "object",
-            required: [ "nickname", "slot_name", "bet_size", "currency", "authentication" ],
+            required: [ "nickname", "slot_name", "bet_size", /*"currency",*/ "authentication" ],
             additionalProperties: false,
             properties:
             {
