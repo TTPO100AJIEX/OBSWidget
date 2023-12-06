@@ -17,9 +17,6 @@
         --color-red: hsl(354, 70%, 54%);
         --color-red-hover: hsl(354, 70%, 46%);
 
-        --color-blue: hsl(211, 100%, 50%);
-        --color-blue-hover: hsl(211, 100%, 43%);
-
         --color-green: hsl(134, 61%, 41%);
         --color-green-hover: hsl(133, 61%, 33%);
 
@@ -140,14 +137,11 @@
         text-align: center; font-size: var(--font-size-regular); color: var(--text-major-color); text-decoration: none;
     }
 
-    .red_button { background: var(--color-red); }
+    .red_button { background: var(--color-red); color: var(--text-inverse-color); }
     .red_button:hover { background: var(--color-red-hover); }
     
-    .green_button { background: var(--color-green); }
+    .green_button { background: var(--color-green); color: var(--text-inverse-color); }
     .green_button:hover { background: var(--color-green-hover); }
-    
-    .blue_button { background: var(--color-blue); }
-    .blue_button:hover { background: var(--color-blue-hover); }
     
     .yellow_button { background: var(--color-yellow); color: var(--text-minor-color); }
     .yellow_button:hover { background: var(--color-yellow-hover); }

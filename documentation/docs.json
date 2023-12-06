@@ -152,12 +152,23 @@
                             "schema": {
                                 "type": "object",
                                 "required": [
-                                    "balance",
-                                    "currency",
                                     "authentication"
                                 ],
                                 "additionalProperties": false,
+                                "minProperties": 2,
                                 "properties": {
+                                    "on": {
+                                        "type": "boolean"
+                                    },
+                                    "off": {
+                                        "type": "boolean"
+                                    },
+                                    "main": {
+                                        "type": "boolean"
+                                    },
+                                    "start": {
+                                        "type": "boolean"
+                                    },
                                     "balance": {
                                         "$ref": "#/components/schemas/def-4"
                                     },
@@ -201,6 +212,7 @@
                                     "nickname",
                                     "slot_name",
                                     "bet_size",
+                                    "currency",
                                     "authentication"
                                 ],
                                 "additionalProperties": false,
@@ -216,9 +228,6 @@
                                     },
                                     "bet_size": {
                                         "$ref": "#/components/schemas/def-4"
-                                    },
-                                    "currency": {
-                                        "$ref": "#/components/schemas/def-1"
                                     },
                                     "winning": {
                                         "$ref": "#/components/schemas/def-4"

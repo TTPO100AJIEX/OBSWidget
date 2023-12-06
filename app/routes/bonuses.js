@@ -18,7 +18,7 @@ async function register(app, options)
     app.get("/session/:session_id", { schema: GET_SCHEMA, config: { access: "authorization" } }, async (req, res) =>
     {
         const bonuses_query_string = `SELECT id, index, nickname, slot_name, bet_size, currency, winning FROM bonuses_view WHERE session_id = %L`;
-        const session_query_string = `SELECT id, balance, currency FROM sessions_view WHERE id = %L`;
+        const session_query_string = `SELECT id, balance, currency, mode, is_on FROM sessions_view WHERE id = %L`;
         const batch = new Database.AnonymousBatch();
         batch.execute(Database.format(bonuses_query_string, req.params.session_id));
         batch.execute({ query: Database.format(session_query_string, req.params.session_id), one_response: true });
@@ -41,10 +41,15 @@ async function register(app, options)
         body:
         {
             type: "object",
-            required: [ "balance", "currency", "authentication" ],
+            required: [ "authentication" ],
             additionalProperties: false,
+            minProperties: 2,
             properties:
             {
+                "on": { type: "boolean" },
+                "off": { type: "boolean" },
+                "main": { type: "boolean" },
+                "start": { type: "boolean" },
                 "balance": { $ref: "uint" },
                 "currency": { $ref: "currency" },
                 "authentication": { $ref: "authentication" }
@@ -53,8 +58,17 @@ async function register(app, options)
     };
     app.post("/session/:session_id", { schema: SESSION_POST_SCHEMA, config: { access: "authorization" } }, async (req, res) =>
     {
-        const query_string = `UPDATE sessions SET balance = $1, currency = $2 WHERE id = $3`;
-        await Database.execute(query_string, [ req.body.balance, req.body.currency, req.params.session_id ]);
+        const updates = { };
+        if (req.body.on) updates.is_on = true;
+        if (req.body.off) updates.is_on = false;
+        if (req.body.main) updates.mode = "MAIN";
+        if (req.body.start) updates.mode = "START";
+        if (req.body.balance) updates.balance = req.body.balance;
+        if (req.body.currency) updates.currency = req.body.currency;
+        const keys = "%I,".repeat(Object.keys(updates).length).slice(0, -1);
+        const values = Object.keys(updates).map((_, index) => `$${index + 2}`).join(',');
+        const query_string = Database.format(`UPDATE sessions SET (${keys}) = ROW(${values}) WHERE id = $1`, ...Object.keys(updates));
+        await Database.execute(query_string, [ req.params.session_id, ...Object.values(updates) ]);
         return res.status(303).redirect(`/session/${req.params.session_id}`);
     });
     
@@ -73,7 +87,7 @@ async function register(app, options)
         body:
         {
             type: "object",
-            required: [ "nickname", "slot_name", "bet_size", "authentication" ],
+            required: [ "nickname", "slot_name", "bet_size", "currency", "authentication" ],
             additionalProperties: false,
             properties:
             {
@@ -81,7 +95,7 @@ async function register(app, options)
                 "nickname": { type: "string" },
                 "slot_name": { type: "string" },
                 "bet_size": { $ref: "uint" },
-                "currency": { $ref: "currency" },
+                // "currency": { $ref: "currency" },
                 "winning": { $ref: "uint" },
                 "update": { type: "boolean" },
                 "delete": { type: "boolean" },

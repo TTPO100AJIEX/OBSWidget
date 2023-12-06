@@ -1,6 +1,15 @@
 <main>
     <h1>BONUSHUNT #<%=session.id%></h1>
 
+    <form method="POST" action="/session/<%=session.id%>">
+        <button name="main" value="true" class="<%=session.mode == 'MAIN' ? 'active' : ''%>">main</button>
+        <button name="start" value="true" class="green_button <%=session.mode == 'START' ? 'active' : ''%>">Start</button>
+        <% if (!session.is_on) { %> <button name="on" value="true" class="green_button active">ON</button> <% }
+        else { %> <button name="off" value="true" class="red_button active">OFF</button> <% } %>
+        <a class="green_button" href="/session/<%=session.id%>/widget">Виджет</a>
+        <input type="hidden" name="authentication" value="<%=req.authentication_code%>">
+    </form>
+
     <form class="surface" method="POST" action="/session/<%=session.id%>">
         <span>Начальный баланс:</span>
         <input type="hidden" name="authentication" value="<%=req.authentication_code%>">
