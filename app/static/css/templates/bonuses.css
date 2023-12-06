@@ -1,11 +1,21 @@
-main { display: grid; grid-template-columns: 1fr auto auto; column-gap: var(--margin-horizontal-big); row-gap: var(--margin-vertical-regular); }
+main { display: grid; grid-template-columns: 1fr auto auto; gap: var(--sizing-medium); }
 main > h1 { margin-bottom: 0; grid-column: 1 / -1; }
 h1, main > :first-child { margin-bottom: 0; }
 .surface { margin: 0; }
 
 main > form { display: flex; align-items: center; gap: var(--sizing-regular); }
 main > form > button { width: max-content; flex-shrink: 0; }
-main > form > select { width: 8ch; flex-shrink: 0; }
+.currency_menu { width: 8ch; flex-shrink: 0; }
 main > form > span { white-space: nowrap; }
+main > form > input { min-width: 10ch; }
 
-main > div.surface { display: flex; place-items: center; place-content: center; }
+main > div.surface { display: flex; place-items: center; place-content: center; white-space: nowrap; }
+
+main > form:nth-of-type(2) { grid-column: 1 / -1; }
+
+table { grid-column: 1 / -1; white-space: nowrap; }
+td * { display: inline-block; }
+table input { width: 10ch; background: transparent; border: none; }
+table button { vertical-align: middle; }
+table button:last-child { margin-left: var(--sizing-regular); }
+table button > img { display: block; height: calc(var(--interactive-min-height) - 2 * var(--padding-vertical-regular)); }

@@ -28,11 +28,9 @@
 
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
 
-button, a { color: var(--text-inverse-color); width: max-content; margin: var(--margin-vertical-interactive) 0; border-radius: var(--border-radius-small); }
-:is(button, a):hover { background: var(--brand-hover-color); }
-
-:is(button, a).secondary { background: var(--color-yellow); color: var(--text-minor-color); }
-:is(button, a).secondary:hover { background: var(--color-yellow-hover); }
+button, a { width: max-content; border-radius: var(--border-radius-small); }
+:is(button, a):not(.red_button, .green_button, .blue_button, .yellow_button) { color: var(--text-inverse-color); }
+:is(button, a):not(.red_button, .green_button, .blue_button, .yellow_button):hover { background: var(--brand-hover-color); }
 
 main > :first-child { margin: var(--margin-vertical-medium) 0; }
 

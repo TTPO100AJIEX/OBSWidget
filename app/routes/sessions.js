@@ -14,7 +14,7 @@ async function register(app, options)
         body:
         {
             type: "object",
-            required: [ ],
+            required: [ "authentication" ],
             additionalProperties: false,
             properties:
             {

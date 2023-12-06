@@ -1,15 +1,18 @@
 <%
-const values = {
+const values =
+{
     "ROUBLE": "₽",
     "DOLLAR": "$",
     "EURO": "€"
 };
+
+const form = locals.form ? `form=${locals.form}` : '';
 %>
 
-<select name="currency" required>
+<select class="currency_menu" name="currency" <%=form%> required>
     <% for (const key in values)
     {
-        const selected = (value == key) ? 'selected' : ''; %>
+        const selected = (locals.value == key) ? 'selected' : ''; %>
         <option value="<%=key%>" <%=selected%>><%=values[key]%></option>
     <% } %>
 </select>

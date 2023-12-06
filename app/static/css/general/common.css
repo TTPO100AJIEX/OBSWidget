@@ -14,7 +14,7 @@
 {
     :root, ::backdrop
     {
-        --color-red: hsl(354, 70%, 44%);
+        --color-red: hsl(354, 70%, 54%);
         --color-red-hover: hsl(354, 70%, 46%);
 
         --color-blue: hsl(211, 100%, 50%);
@@ -114,12 +114,16 @@
     input:not([type='checkbox']), select, textarea
     {
         display: block; min-width: var(--interactive-min-width); width: 100%; min-height: var(--interactive-min-height); padding: var(--padding-regular);
-        background-color: var(--background-color); border: thin solid var(--border-color); border-radius: var(--border-radius-regular);
+        background-color: var(--text-inverse-color); border: thin solid var(--border-color); border-radius: var(--border-radius-regular);
         color: var(--text-major-color); font-size: var(--font-size-regular);
     }
-    ::placeholder { color: var(--text-minor-color); opacity: 1; }
+    ::placeholder { color: var(--text-placeholder-color); opacity: 1; }
     
-    select { border: none; border-right: var(--padding-horizontal-regular) solid transparent !important; box-shadow: 0 0 0 1px var(--border-color); }
+    select
+    {
+        border: none; border-right: var(--padding-horizontal-regular) solid transparent !important; box-shadow: 0 0 0 1px var(--border-color);
+        min-height: calc(var(--interactive-min-height) - 2px);
+    }
 }
 
 @layer labels
@@ -135,4 +139,24 @@
         background-color: var(--brand-color); border: thin solid transparent; border-radius: var(--border-radius-regular);
         text-align: center; font-size: var(--font-size-regular); color: var(--text-major-color); text-decoration: none;
     }
+
+    .red_button { background: var(--color-red); }
+    .red_button:hover { background: var(--color-red-hover); }
+    
+    .green_button { background: var(--color-green); }
+    .green_button:hover { background: var(--color-green-hover); }
+    
+    .blue_button { background: var(--color-blue); }
+    .blue_button:hover { background: var(--color-blue-hover); }
+    
+    .yellow_button { background: var(--color-yellow); color: var(--text-minor-color); }
+    .yellow_button:hover { background: var(--color-yellow-hover); }
+}
+
+@layer table
+{
+    table { width: 100%; border-spacing: 0 var(--sizing-medium); text-align: center; }
+    td, th { background: var(--surface-color); border-bottom: thin solid var(--border-color); border-top: thin solid var(--border-color); padding: var(--padding-vertical-big) 0; }
+    :is(td, th):first-child { border-left: thin solid var(--border-color); border-radius: var(--border-radius-small) 0 0 var(--border-radius-small); }
+    :is(td, th):last-child { border-right: thin solid var(--border-color); border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0; }
 }

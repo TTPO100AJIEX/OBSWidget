@@ -1,12 +1,71 @@
 <main>
     <h1>BONUSHUNT #<%=session.id%></h1>
+
     <form class="surface" method="POST" action="/session/<%=session.id%>">
         <span>Начальный баланс:</span>
         <input type="hidden" name="authentication" value="<%=req.authentication_code%>">
-        <input type="number" name="balance" value="<%=session.balance%>" required>
+        <input type="number" name="balance" min="0" value="<%=session.balance%>" placeholder="Введите начальный баланс" required>
         <%- include("utils/currency_menu.ejs", { value: session.currency }) %>
         <button>Сохранить</button>
     </form>
     <div class="surface">Выигрыш: <%=bonuses.reduce((prev, cur) => prev + cur.winning, 0).toFixed(2)%>₽</div>
     <div class="surface">Количество бонусок: <%=bonuses.length%></div>
+
+    <form method="POST" action="/session/<%=session.id%>/bonus">
+        <input type="text" name="nickname" placeholder="NickName/ID" required>
+        <input type="text" name="slot_name" placeholder="Название слота" required>
+        <input type="hidden" name="authentication" value="<%=req.authentication_code%>">
+        <input type="number" name="bet_size" min="0" placeholder="Размер ставки" required>
+        <%- include("utils/currency_menu.ejs"); %>
+        <button>Добавить</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nickname/ID</th>
+                <th>Название слота</th>
+                <th>Стоимость бонуски</th>
+                <th>Выигрыш</th>
+                <th>X</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (const { id, index, nickname, slot_name, bet_size, currency, winning } of bonuses)
+            { %>
+                <tr>
+                    <td>
+                        <input type="text" name="nickname" placeholder="nickname/id" value="<%=nickname%>" form="bonus_<%=id%>" required>
+                    </td>
+                    <td>
+                        <%=index%>. <input type="text" name="slot_name" value="<%=slot_name%>" form="bonus_<%=id%>" required>
+                    </td>
+                    <td>
+                        <input type="number" name="bet_size" min="0" value="<%=bet_size%>" form="bonus_<%=id%>" required>
+                        <%- include("utils/currency_menu.ejs", { value: currency, form: `bonus_${id}` }) %>
+                    </td>
+                    <td>
+                        <input type="number" name="winning" min="0" placeholder="?" value="<%=winning%>" form="bonus_<%=id%>" required>
+                    </td>
+                    <td>
+                        <%=(winning / bet_size).toFixed(2)%>
+                    </td>
+                    <td>
+                        <button name="update" value="true" form="bonus_<%=id%>">Сохранить</button>
+                        <button name="delete" value="true" class="red_button" form="bonus_<%=id%>">
+                            <img src="/static/images/bonuses/delete_slot.png" alt="Delete">
+                        </button>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <% for (const { id } of bonuses)
+    { %>
+        <form id="bonus_<%=id%>" method="POST" action="/session/<%=session.id%>/bonus">
+            <input type="hidden" name="authentication" value="<%=req.authentication_code%>">
+            <input type="hidden" name="id" value="<%=id%>">
+        </form>
+    <% } %>
 </main>

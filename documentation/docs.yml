@@ -99,7 +99,10 @@ paths:
           application/json:
             schema:
               type: object
-              required: []
+              required:
+                - balance
+                - currency
+                - authentication
               additionalProperties: false
               properties:
                 balance:
@@ -108,6 +111,49 @@ paths:
                   $ref: "#/components/schemas/def-1"
                 authentication:
                   $ref: "#/components/schemas/def-0"
+        required: true
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/def-3"
+          in: path
+          name: session_id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+  /session/{session_id}/bonus:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nickname
+                - slot_name
+                - bet_size
+                - authentication
+              additionalProperties: false
+              properties:
+                id:
+                  $ref: "#/components/schemas/def-3"
+                nickname:
+                  type: string
+                slot_name:
+                  type: string
+                bet_size:
+                  $ref: "#/components/schemas/def-4"
+                currency:
+                  $ref: "#/components/schemas/def-1"
+                winning:
+                  $ref: "#/components/schemas/def-4"
+                update:
+                  type: boolean
+                delete:
+                  type: boolean
+                authentication:
+                  $ref: "#/components/schemas/def-0"
+        required: true
       parameters:
         - schema:
             $ref: "#/components/schemas/def-3"
@@ -187,11 +233,13 @@ paths:
           application/json:
             schema:
               type: object
-              required: []
+              required:
+                - authentication
               additionalProperties: false
               properties:
                 authentication:
                   $ref: "#/components/schemas/def-0"
+        required: true
       responses:
         "200":
           description: Default Response
