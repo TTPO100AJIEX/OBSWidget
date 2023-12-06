@@ -28,5 +28,5 @@
 body { font-family: 'Inconsolata'; }
 input { border: thin solid transparent; }
 button { box-shadow: 0 5px 0 var(--shadow-color); }
-h1 { font-weight: 400; color: var(--text-minor-color); text-shadow: 0px 0px 50px var(--border-color); }
+h1 { font-weight: 400; text-shadow: 0px 0px 50px var(--border-color); }
 hr { background: linear-gradient(90deg, rgba(153, 64, 222, 0.00) -1.25%, #A750FC 50.53%, rgba(153, 64, 222, 0.00) 101.25%); }

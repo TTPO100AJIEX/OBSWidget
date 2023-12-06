@@ -1,0 +1,12 @@
+<main>
+    <h1>BONUSHUNT #<%=session.id%></h1>
+    <form class="surface" method="POST" action="/session/<%=session.id%>">
+        <span>Начальный баланс:</span>
+        <input type="hidden" name="authentication" value="<%=req.authentication_code%>">
+        <input type="number" name="balance" value="<%=session.balance%>" required>
+        <%- include("utils/currency_menu.ejs", { value: session.currency }) %>
+        <button>Сохранить</button>
+    </form>
+    <div class="surface">Выигрыш: <%=bonuses.reduce((prev, cur) => prev + cur.winning, 0).toFixed(2)%>₽</div>
+    <div class="surface">Количество бонусок: <%=bonuses.length%></div>
+</main>

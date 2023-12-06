@@ -1,0 +1,5 @@
+{
+    "$id": "currency",
+    "type": "string",
+    "enum": [ "ROUBLE", "DOLLAR", "EURO" ]
+}

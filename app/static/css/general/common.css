@@ -37,10 +37,10 @@
         --sizing-medium:      var(--font-size-medium);
         --sizing-big:         var(--font-size-big);
 
-        --padding-vertical-interactive: calc(var(--sizing-interactive) / 1.25);
-        --padding-vertical-regular:     calc(var(--sizing-regular)     / 1.25);
-        --padding-vertical-medium:      calc(var(--sizing-medium)      / 1.25);
-        --padding-vertical-big:         calc(var(--sizing-big)         / 1.25);
+        --padding-vertical-interactive: calc(var(--sizing-interactive) / 1.75);
+        --padding-vertical-regular:     calc(var(--sizing-regular)     / 1.75);
+        --padding-vertical-medium:      calc(var(--sizing-medium)      / 1.75);
+        --padding-vertical-big:         calc(var(--sizing-big)         / 1.75);
 
         --padding-horizontal-interactive: calc(var(--sizing-interactive) / 0.75);
         --padding-horizontal-regular:     calc(var(--sizing-regular)     / 0.75);
@@ -105,9 +105,8 @@
 
 @layer headings
 {
-    h1, h2, h3, figcaption { color: var(--text-major-color); }
-    h1 { font-size: var(--font-size-big); font-weight: 700; }
-    h2, figcaption { font-size: var(--font-size-medium); font-weight: 600; }
+    h1 { font-size: var(--font-size-big); color: var(--text-minor-color); font-weight: 700; }
+    h2, figcaption { font-size: var(--font-size-medium); color: var(--text-major-color); font-weight: 600; }
 }
 
 @layer inputs

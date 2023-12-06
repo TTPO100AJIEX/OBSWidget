@@ -22,7 +22,7 @@ async function register(app, options)
             }
         }
     };
-    app.post("/session", { schema: POST_SCHEMA, config: { access: "authorization" } }, async (req, res) =>
+    app.post("/sessions", { schema: POST_SCHEMA, config: { access: "authorization" } }, async (req, res) =>
     {
         await Database.execute("INSERT INTO sessions DEFAULT VALUES");
         return res.status(303).redirect("/sessions");

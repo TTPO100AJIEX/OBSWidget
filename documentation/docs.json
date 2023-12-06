@@ -22,9 +22,28 @@
             },
             "def-1": {
                 "type": "string",
-                "title": "login"
+                "enum": [
+                    "ROUBLE",
+                    "DOLLAR",
+                    "EURO"
+                ],
+                "title": "currency"
             },
             "def-2": {
+                "type": "string",
+                "title": "login"
+            },
+            "def-3": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "title": "positive_int"
+            },
+            "def-4": {
+                "type": "integer",
+                "minimum": 0,
+                "title": "uint"
+            },
+            "def-5": {
                 "type": "string",
                 "title": "password"
             }
@@ -108,6 +127,64 @@
                 }
             }
         },
+        "/session/{session_id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "schema": {
+                            "$ref": "#/components/schemas/def-3"
+                        },
+                        "in": "path",
+                        "name": "session_id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            },
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "balance": {
+                                        "$ref": "#/components/schemas/def-4"
+                                    },
+                                    "currency": {
+                                        "$ref": "#/components/schemas/def-1"
+                                    },
+                                    "authentication": {
+                                        "$ref": "#/components/schemas/def-0"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "$ref": "#/components/schemas/def-3"
+                        },
+                        "in": "path",
+                        "name": "session_id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            }
+        },
         "/validate": {
             "get": {
                 "parameters": [
@@ -166,10 +243,10 @@
                                 "additionalProperties": false,
                                 "properties": {
                                     "login": {
-                                        "$ref": "#/components/schemas/def-1"
+                                        "$ref": "#/components/schemas/def-2"
                                     },
                                     "password": {
-                                        "$ref": "#/components/schemas/def-2"
+                                        "$ref": "#/components/schemas/def-5"
                                     },
                                     "authentication": {
                                         "$ref": "#/components/schemas/def-0"
@@ -212,9 +289,7 @@
                         "description": "Default Response"
                     }
                 }
-            }
-        },
-        "/session": {
+            },
             "post": {
                 "requestBody": {
                     "content": {

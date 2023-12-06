@@ -10,6 +10,8 @@
     --text-placeholder-color: hsl(219, 12%, 56%);
     --text-inverse-color: hsl(0, 100%, 100%);
 
+    --brand-hover-color: hsl(211, 100%, 43%);
+
     color-scheme: light;
     
     --interactive-min-width: 0px;
@@ -24,7 +26,22 @@
     --sizing-big:     calc(0.40 * var(--font-size-big));
 }
 
-body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+
 button, a { color: var(--text-inverse-color); width: max-content; margin: var(--margin-vertical-interactive) 0; border-radius: var(--border-radius-small); }
+:is(button, a):hover { background: var(--brand-hover-color); }
+
 :is(button, a).secondary { background: var(--color-yellow); color: var(--text-minor-color); }
 :is(button, a).secondary:hover { background: var(--color-yellow-hover); }
+
+main > :first-child { margin: var(--margin-vertical-medium) 0; }
+
+input, select { border-radius: var(--border-radius-small); }
+
+h1 { font-weight: 500; }
+
+.surface
+{
+    background: var(--surface-color); padding: var(--padding-big); margin: var(--margin-vertical-medium) 0;
+    border-radius: var(--border-radius-small); border: thin solid var(--border-color);
+}

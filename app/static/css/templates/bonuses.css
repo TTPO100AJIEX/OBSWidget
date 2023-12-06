@@ -1,0 +1,11 @@
+main { display: grid; grid-template-columns: 1fr auto auto; column-gap: var(--margin-horizontal-big); row-gap: var(--margin-vertical-regular); }
+main > h1 { margin-bottom: 0; grid-column: 1 / -1; }
+h1, main > :first-child { margin-bottom: 0; }
+.surface { margin: 0; }
+
+main > form { display: flex; align-items: center; gap: var(--sizing-regular); }
+main > form > button { width: max-content; flex-shrink: 0; }
+main > form > select { width: 8ch; flex-shrink: 0; }
+main > form > span { white-space: nowrap; }
+
+main > div.surface { display: flex; place-items: center; place-content: center; }

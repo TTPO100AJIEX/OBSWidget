@@ -1,0 +1,15 @@
+<%
+const values = {
+    "ROUBLE": "₽",
+    "DOLLAR": "$",
+    "EURO": "€"
+};
+%>
+
+<select name="currency" required>
+    <% for (const key in values)
+    {
+        const selected = (value == key) ? 'selected' : ''; %>
+        <option value="<%=key%>" <%=selected%>><%=values[key]%></option>
+    <% } %>
+</select>

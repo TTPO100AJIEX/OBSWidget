@@ -1,0 +1,5 @@
+{
+    "$id": "positive_int",
+    "type": "integer",
+    "exclusiveMinimum": 0
+}
