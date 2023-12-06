@@ -1,0 +1,18 @@
+<main>
+    <form method="POST" action="/session">
+        <button>Создать новый BonusBuy</button>
+        <input type="hidden" name="authentication" value="<%=req.authentication_code%>">
+    </form>
+    <% for (const { id, balance, currency, bonuses, created } of sessions)
+    { %>
+        <figure>
+            <figcaption>BonusBuy №<%=id%></figcaption>
+            <p>
+                Начальный баланс - <%=balance%><%-include("utils/currency.ejs", { value: currency })%> <br>
+                Количество бонусов - <%=bonuses%> <br>
+                Дата создания - <%-include("utils/date.ejs", { value: created })%>
+            </p>
+            <a href="/session/<%=id%>" class="secondary">Открыть</a>
+        </figure>
+    <% } %>
+</main>

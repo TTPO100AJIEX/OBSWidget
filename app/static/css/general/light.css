@@ -1,17 +1,30 @@
 :root, ::backdrop
 {
-    --brand-color: hsl(210, 10%, 23%);
+    --brand-color: hsl(211, 100%, 50%);
     --background-color: hsl(223, 30%, 95%);
     --surface-color: hsl(189, 53%, 88%);
     --border-color: hsl(188, 53%, 83%);
 
     --text-major-color: hsl(189, 78%, 21%);
-    --text-minor-color: hsl(0, 0%, 46%);
+    --text-minor-color: hsl(210, 11%, 15%);
     --text-placeholder-color: hsl(219, 12%, 56%);
+    --text-inverse-color: hsl(0, 100%, 100%);
 
     color-scheme: light;
     
+    --interactive-min-width: 0px;
+    --interactive-min-height: 40px;
+
     --font-size-regular:  16px;
-    --font-size-medium:   20px;
+    --font-size-medium:   25px;
     --font-size-big:      40px;
+
+    --sizing-regular: calc(0.50 * var(--font-size-regular));
+    --sizing-medium:  calc(0.45 * var(--font-size-medium));
+    --sizing-big:     calc(0.40 * var(--font-size-big));
 }
+
+body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; }
+button, a { color: var(--text-inverse-color); width: max-content; margin: var(--margin-vertical-interactive) 0; border-radius: var(--border-radius-small); }
+:is(button, a).secondary { background: var(--color-yellow); color: var(--text-minor-color); }
+:is(button, a).secondary:hover { background: var(--color-yellow-hover); }

@@ -1,3 +1,15 @@
+@media (prefers-reduced-motion: reduce)
+{
+    *, *::before, *::after
+    {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
 @layer normalization
 {
     :root, ::backdrop
@@ -10,6 +22,9 @@
 
         --color-green: hsl(134, 61%, 41%);
         --color-green-hover: hsl(133, 61%, 33%);
+
+        --color-yellow: hsl(45, 100%, 51%);
+        --color-yellow-hover: hsl(45, 100%, 44%);
     }
 
     :root, ::backdrop
@@ -59,7 +74,11 @@
         --border-radius-regular: 10px;
     }
     
-    *, *::before, *::after { padding: 0; margin: 0; box-sizing: border-box; text-indent: 0; }
+    *, *::before, *::after
+    {
+        padding: 0; margin: 0; box-sizing: border-box; text-indent: 0;
+        transition-duration: 0.15s; transition-timing-function: ease-in-out; transition-property: var(--transitioned), background-color, color, border-color, text-decoration-color; --transitioned: color;
+    }
     * { font-family: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; }
     body
     {
@@ -86,9 +105,9 @@
 
 @layer headings
 {
-    h1, h2, h3 { color: var(--text-major-color); }
+    h1, h2, h3, figcaption { color: var(--text-major-color); }
     h1 { font-size: var(--font-size-big); font-weight: 700; }
-    h2 { font-size: var(--font-size-medium); font-weight: 600; }
+    h2, figcaption { font-size: var(--font-size-medium); font-weight: 600; }
 }
 
 @layer inputs
@@ -111,10 +130,10 @@
 
 @layer buttons
 {
-    button
+    button, a
     {
         display: block; min-width: var(--interactive-min-width); width: 100%; min-height: var(--interactive-min-height); padding: var(--padding-regular);
         background-color: var(--brand-color); border: thin solid transparent; border-radius: var(--border-radius-regular);
-        text-align: center; font-size: var(--font-size-regular);
+        text-align: center; font-size: var(--font-size-regular); color: var(--text-major-color); text-decoration: none;
     }
 }

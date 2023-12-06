@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.3",
     "info": {
-        "version": "8.12.0",
+        "version": "8.12.1",
         "title": "@fastify/swagger"
     },
     "components": {
@@ -198,6 +198,40 @@
         },
         "/": {
             "get": {
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            }
+        },
+        "/sessions": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Default Response"
+                    }
+                }
+            }
+        },
+        "/session": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "authentication": {
+                                        "$ref": "#/components/schemas/def-0"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Default Response"

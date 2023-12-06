@@ -1,0 +1,6 @@
+body > header { background: hsl(210, 10%, 23%); display: flex; justify-content: space-between; padding: var(--padding-big); color: var(--text-inverse-color); }
+
+body > header > div:nth-child(1) > span { font-size: var(--font-size-medium); }
+body > header > div:nth-child(1) > sup { position: relative; top: -0.5em; font-size: calc(var(--font-size-medium) / 2); }
+
+body > header > div:nth-child(2) { display: flex; align-items: center; gap: var(--sizing-regular); }

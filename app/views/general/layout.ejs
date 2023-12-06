@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang='ru'>
+    <head>
+        <%- include("./head.ejs", { style: locals.style ?? "light" }) %>
+        
+        <link rel="stylesheet" href="/static/css/general/layout.css" nonce="<%=res.cspNonce.style%>">
+        <link rel="stylesheet" href="/static/css/general/header.css" nonce="<%=res.cspNonce.style%>">
+        
+        <%- include(`templates/${template}/head.ejs`) %>
+    </head>
+    <body>
+        <%- include("./header.ejs") %>
+        <%- include(`templates/${template}/body.ejs`) %>
+    </body>
+</html>

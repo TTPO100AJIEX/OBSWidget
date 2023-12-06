@@ -1,0 +1,9 @@
+<%
+const day = value.getDate().toString().padStart(2, "0");
+const month = (value.getMonth() + 1).toString().padStart(2, "0");
+const hour = value.getHours().toString().padStart(2, "0");
+const minute = value.getMinutes().toString().padStart(2, "0");
+const second = value.getSeconds().toString().padStart(2, "0");
+%>
+
+<%=day%>.<%=month%>.<%=value.getFullYear()%>, <%=hour%>:<%=minute%>:<%=second%>

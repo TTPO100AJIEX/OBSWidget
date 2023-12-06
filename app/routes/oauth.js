@@ -52,7 +52,7 @@ async function register(app, options)
     app.post("/login", { schema: LOGIN_SCHEMA, config: { authentication: true, access: "public" } }, async (req, res) =>
     {
         await res.createSessionID(req.body.login, req.body.password);
-        return res.status(303).redirect("/bonusbuy");
+        return res.status(303).redirect("/sessions");
     });
 
 

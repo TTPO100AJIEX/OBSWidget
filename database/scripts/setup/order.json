@@ -1,2 +1,5 @@
 [
+    "sessions.sql",
+    "bonuses.sql",
+    "views.sql"
 ]
