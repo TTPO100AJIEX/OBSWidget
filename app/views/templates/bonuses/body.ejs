@@ -55,7 +55,8 @@
                         <%- include("utils/currency_menu.ejs", { value: currency, form: `bonus_${id}` }) %>
                     </td>
                     <td>
-                        <input type="number" name="winning" min="0" placeholder="?" value="<%=winning%>" form="bonus_<%=id%>" required>
+                        <% const readonly = (session.mode != "START" ? "readonly disabled" : ''); %>
+                        <input type="number" name="winning" min="0" placeholder="?" value="<%=winning%>" form="bonus_<%=id%>" <%=readonly%> required>
                     </td>
                     <td>
                         <%=(winning / bet_size).toFixed(2)%>
