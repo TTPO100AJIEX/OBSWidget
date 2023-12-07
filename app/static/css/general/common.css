@@ -92,7 +92,7 @@
 
     strong { font-weight: 700; }
 
-    hr { margin: var(--margin-vertical-regular) 0; border: none; background-color: var(--border-color); height: 1px; }
+    hr { margin: var(--margin-vertical-regular) 0; border: none; background-color: var(--border-color); height: 2px; }
 
     [hidden], input[type=hidden] { display: none !important; content-visibility: hidden !important; }
     @media (min-width: 1000px)

@@ -6,7 +6,7 @@ main
     display: flex; flex-direction: column;
 }
 
-main > div:nth-child(1)
+main > div:nth-of-type(1)
 {
     display: grid; grid-template-columns: auto auto; align-items: center; justify-content: center; line-height: 1; column-gap: var(--sizing-regular);
 
@@ -15,51 +15,61 @@ main > div:nth-child(1)
     & > span { color: var(--text-major-color); text-shadow: unset; }
 }
 
-main > div:nth-child(2)
+main > div:nth-of-type(2)
 {
     display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr; background: var(--background-color); border-radius: var(--border-radius-regular);
     margin-top: var(--margin-vertical-big); padding: var(--padding-vertical-regular) 0;
     
-    & > div { padding-top: calc(var(--padding-vertical-regular) + 10px); position: relative; text-align: center; }
+    & > span { padding-top: calc(var(--padding-vertical-regular) + 10px); position: relative; text-align: center; }
     & > hr{ height: 100%; margin: 0; }
-    & > div::before
+    & > span::before
     {
         content: ''; height: 30px; aspect-ratio: 1 / 1; background-size: cover; background-repeat: no-repeat;
         position: absolute; left: 50%; top: 0; transform: translate(-50%, calc(-50% - var(--padding-vertical-regular)));
     }
-    & > div:nth-of-type(1)::before { background-image: url("/static/images/widget/info/sum_deposit.svg"); height: 35px; }
-    & > div:nth-of-type(2)::before { background-image: url("/static/images/widget/info/min_x.svg"); }
-    & > div:nth-of-type(3)::before { background-image: url("/static/images/widget/info/bonus_amount.svg"); }
+    & > span:nth-of-type(1)::before { background-image: url("/static/images/widget/info/sum_deposit.svg"); height: 35px; }
+    & > span:nth-of-type(2)::before { background-image: url("/static/images/widget/info/min_x.svg"); }
+    & > span:nth-of-type(3)::before { background-image: url("/static/images/widget/info/bonus_amount.svg"); }
 }
 
-main > div:nth-child(3)
+main > div:nth-of-type(3)
 {
     margin-top: var(--margin-vertical-regular); padding: var(--padding-regular);
     background: var(--background-color); border-radius: var(--border-radius-regular);
 
-    & > div { display: flex; align-items: center; gap: var(--sizing-regular); }
-    & > div::before { content: ''; height: 1em; aspect-ratio: 1 / 1; background: center / contain no-repeat; }
-    & > div:nth-child(1)::before { background-image: url("/static/images/widget/stats/max_winning.svg"); }
-    & > div:nth-child(2)::before { background-image: url("/static/images/widget/stats/min_winning.svg"); }
+    & > span { display: flex; align-items: center; gap: var(--sizing-regular); }
+    & > span::before { content: ''; height: 1em; aspect-ratio: 1 / 1; background: center / contain no-repeat; }
+    & > span:nth-child(1)::before { background-image: url("/static/images/widget/stats/max_winning.svg"); }
+    & > span:nth-child(2)::before { background-image: url("/static/images/widget/stats/min_winning.svg"); }
 }
 
 main > div:last-child
 {
-    width: calc(100% + 2 * var(--padding-horizontal-big) + 30px);
-    overflow: hidden;
-    position: relative;
-    left: calc(-1 * var(--padding-horizontal-big) - 15px);
-    padding-left: calc(var(--padding-horizontal-big) + 15px);
-    padding-right: calc(var(--padding-horizontal-big) + 15px);
+    position: relative; width: calc(100% + 2 * var(--padding-horizontal-big) + 30px);
+    overflow: hidden; left: calc(-1 * var(--padding-horizontal-big) - 15px);
+    
+    & span
+    {
+        display: flex; align-items: center; width: 100%; padding: 0 calc(var(--padding-horizontal-big) + 15px); border-radius: var(--border-radius-regular);
+        --offset: calc(-1 * var(--hidden-items) * var(--font-size-medium) * var(--line-height)); transform: translateY(var(--offset));
+        --transitioned: font-size, box-shadow, padding, margin, transform; transition-duration: 1s;
+    }
+    & span.highlight
+    {
+        background-color: var(--brand-color); box-shadow: 0 5px 0 var(--box-shadow-color); font-size: calc(1.5 * var(--font-size-medium));
+        padding-top: var(--padding-vertical-big); padding-bottom: var(--padding-vertical-big); margin: var(--margin-vertical-regular) 0;
+    }
+    & span.highlight:first-child { margin-top: 0; }
 }
-main > div .chosen
+
+@keyframes main_animation
 {
-    min-height: var(--interactive-min-height); padding: var(--padding-big);
-    background-color: var(--brand-color); border-radius: var(--border-radius-regular);
-    font-size: calc(1.5 * var(--font-size-medium));
-    box-shadow: 0 5px 0 var(--box-shadow-color);
-    width: calc(100% + 2 * var(--padding-horizontal-big) + 30px);
-    left: calc(-1 * var(--padding-horizontal-big) - 15px);
-    margin: var(--margin-vertical-regular) 0;
-    display: flex; align-items: center;
+    0% { translate: 0 0; }
+    100% { translate: 0 -50%; }
 }
+@keyframes main_animation
+{
+    0% { translate: 0 0; }
+    100% { translate: 0 -50%; }
+}
+#main_mode { animation: linear .25s infinite main_animation; }
