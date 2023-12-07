@@ -1,5 +1,5 @@
+main { border: thin solid var(--border-color); }
 h2 { margin-bottom: var(--margin-vertical-regular); }
+body { flex-direction: column; gap: var(--sizing-regular); }
 button { margin-top: var(--margin-vertical-big); margin-bottom: calc(2 * var(--margin-vertical-regular)); }
 footer { color: var(--text-minor-color); text-shadow: 0px 0px 10px var(--shadow-color); text-align: center; }
-body { display: flex; flex-direction: column; place-items: center; place-content: center; gap: var(--sizing-regular); }
-main { background: var(--surface-color); padding: var(--padding-big); width: min-content; border: thin solid var(--border-color); border-radius: var(--border-radius-regular); }

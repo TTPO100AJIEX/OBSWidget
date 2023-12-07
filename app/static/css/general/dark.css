@@ -4,7 +4,8 @@
     --background-color: hsl(264, 57%, 13%);
     --surface-color: linear-gradient(63deg, hsl(263, 56%, 13%) 0%, hsl(272, 57%, 27%) 100%);
     --border-color: hsl(272, 81%, 49%);
-    --shadow-color: hsl(272, 86%, 33%);
+    --shadow-color: hsl(271, 100%, 50%);
+    --box-shadow-color: hsl(272, 86%, 33%);
 
     --text-major-color: hsl(0, 0%, 100%);
     --text-minor-color: hsl(271, 100%, 85%);
@@ -14,7 +15,7 @@
     color-scheme: dark;
     
     --font-size-regular:  16px;
-    --font-size-medium:   21px;
+    --font-size-medium:   20px;
     --font-size-big:      64px;
 
     --interactive-min-width: 440px;
@@ -27,6 +28,11 @@
 
 body { font-family: 'Inconsolata'; }
 input { border: thin solid transparent; }
-button { box-shadow: 0 5px 0 var(--shadow-color); }
+button { box-shadow: 0 5px 0 var(--box-shadow-color); }
 h1 { font-weight: 400; text-shadow: 0px 0px 50px var(--border-color); }
-hr { background: linear-gradient(90deg, rgba(153, 64, 222, 0.00) -1.25%, #A750FC 50.53%, rgba(153, 64, 222, 0.00) 101.25%); }
+
+body { display: flex; place-items: center; place-content: center; }
+main { background: var(--surface-color); padding: var(--padding-big); width: min-content; border-radius: var(--border-radius-regular); }
+
+hr.rotated { --angle: 0deg; }
+hr { background: linear-gradient(var(--angle, 90deg), rgba(153, 64, 222, 0.00) -1.25%, #A750FC 50.53%, rgba(153, 64, 222, 0.00) 101.25%); }

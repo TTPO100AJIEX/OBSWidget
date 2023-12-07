@@ -76,6 +76,7 @@
         padding: 0; margin: 0; box-sizing: border-box; text-indent: 0;
         transition-duration: 0.15s; transition-timing-function: ease-in-out; transition-property: var(--transitioned), background-color, color, border-color, text-decoration-color; --transitioned: color;
     }
+    *::before, *::after { display: inline-block; color: var(--text-major-color); }
     * { font-family: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; }
     body
     {
