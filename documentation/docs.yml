@@ -259,6 +259,17 @@ paths:
       responses:
         "200":
           description: Default Response
+  /session/{session_id}/widget/data:
+    get:
+      parameters:
+        - schema:
+            $ref: "#/components/schemas/def-3"
+          in: path
+          name: session_id
+          required: true
+      responses:
+        "200":
+          description: Default Response
 servers:
   url: https://localhost.xyz
   description: Main server

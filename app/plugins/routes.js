@@ -9,6 +9,7 @@ async function scanDirectory(app, directory)
         if (fileStats.isDirectory()) await scanDirectory(app, path.join(directory, filename));
         if (!fileStats.isFile()) continue;
         const { default: module } = await import(path.join(directory, filename));
+        if (!module[Symbol.for("fastify.display-name")]) continue;
         await app.register(module);
     }
 }

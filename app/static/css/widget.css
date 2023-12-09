@@ -27,9 +27,9 @@ main > div:nth-of-type(2)
         content: ''; height: 30px; aspect-ratio: 1 / 1; background-size: cover; background-repeat: no-repeat;
         position: absolute; left: 50%; top: 0; transform: translate(-50%, calc(-50% - var(--padding-vertical-regular)));
     }
-    & > span:nth-of-type(1)::before { background-image: url("/static/images/widget/info/sum_deposit.svg"); height: 35px; }
-    & > span:nth-of-type(2)::before { background-image: url("/static/images/widget/info/min_x.svg"); }
-    & > span:nth-of-type(3)::before { background-image: url("/static/images/widget/info/bonus_amount.svg"); }
+    #sum_deposit::before { background-image: url("/static/images/widget/info/sum_deposit.svg"); height: 35px; }
+    #min_x::before { background-image: url("/static/images/widget/info/min_x.svg"); }
+    #bonus_amount::before { background-image: url("/static/images/widget/info/bonus_amount.svg"); }
 }
 
 main > div:nth-of-type(3)
@@ -39,8 +39,8 @@ main > div:nth-of-type(3)
 
     & > span { display: flex; align-items: center; gap: var(--sizing-regular); }
     & > span::before { content: ''; height: 1em; aspect-ratio: 1 / 1; background: center / contain no-repeat; }
-    & > span:nth-child(1)::before { background-image: url("/static/images/widget/stats/max_winning.svg"); }
-    & > span:nth-child(2)::before { background-image: url("/static/images/widget/stats/min_winning.svg"); }
+    #max_winning::before { background-image: url("/static/images/widget/stats/max_winning.svg"); }
+    #min_winning::before { background-image: url("/static/images/widget/stats/min_winning.svg"); }
 }
 
 main > div:last-child
@@ -65,11 +65,8 @@ main > div:last-child
 @keyframes main_animation
 {
     0% { translate: 0 0; }
-    100% { translate: 0 -50%; }
+    100% { translate: 0 -100%; }
 }
-@keyframes main_animation
-{
-    0% { translate: 0 0; }
-    100% { translate: 0 -50%; }
-}
-#main_mode { animation: linear .25s infinite main_animation; }
+#main_mode > div > div:has(> :nth-child(10)) { animation: linear 2.25s infinite main_animation; }
+#main_mode > div > div:nth-child(2):not(:has(> :nth-child(10))) { display: none; }
+#main_mode > div > div { padding-bottom: 1em; }
