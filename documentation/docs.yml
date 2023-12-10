@@ -27,13 +27,18 @@ components:
       title: login
     def-3:
       type: integer
+      nullable: true
+      minimum: 0
+      title: optional_uint
+    def-4:
+      type: integer
       exclusiveMinimum: 0
       title: positive_int
-    def-4:
+    def-5:
       type: integer
       minimum: 0
       title: uint
-    def-5:
+    def-6:
       type: string
       title: password
 paths:
@@ -86,7 +91,7 @@ paths:
     get:
       parameters:
         - schema:
-            $ref: "#/components/schemas/def-3"
+            $ref: "#/components/schemas/def-4"
           in: path
           name: session_id
           required: true
@@ -113,7 +118,7 @@ paths:
                 start:
                   type: boolean
                 balance:
-                  $ref: "#/components/schemas/def-4"
+                  $ref: "#/components/schemas/def-5"
                 currency:
                   $ref: "#/components/schemas/def-1"
                 authentication:
@@ -121,7 +126,7 @@ paths:
         required: true
       parameters:
         - schema:
-            $ref: "#/components/schemas/def-3"
+            $ref: "#/components/schemas/def-4"
           in: path
           name: session_id
           required: true
@@ -143,15 +148,15 @@ paths:
               additionalProperties: false
               properties:
                 id:
-                  $ref: "#/components/schemas/def-3"
+                  $ref: "#/components/schemas/def-4"
                 nickname:
                   type: string
                 slot_name:
                   type: string
                 bet_size:
-                  $ref: "#/components/schemas/def-4"
+                  $ref: "#/components/schemas/def-5"
                 winning:
-                  $ref: "#/components/schemas/def-4"
+                  $ref: "#/components/schemas/def-3"
                 update:
                   type: boolean
                 delete:
@@ -161,7 +166,7 @@ paths:
         required: true
       parameters:
         - schema:
-            $ref: "#/components/schemas/def-3"
+            $ref: "#/components/schemas/def-4"
           in: path
           name: session_id
           required: true
@@ -210,7 +215,7 @@ paths:
                 login:
                   $ref: "#/components/schemas/def-2"
                 password:
-                  $ref: "#/components/schemas/def-5"
+                  $ref: "#/components/schemas/def-6"
                 authentication:
                   $ref: "#/components/schemas/def-0"
         required: true
@@ -252,7 +257,7 @@ paths:
     get:
       parameters:
         - schema:
-            $ref: "#/components/schemas/def-3"
+            $ref: "#/components/schemas/def-4"
           in: path
           name: session_id
           required: true
@@ -263,7 +268,7 @@ paths:
     get:
       parameters:
         - schema:
-            $ref: "#/components/schemas/def-3"
+            $ref: "#/components/schemas/def-4"
           in: path
           name: session_id
           required: true

@@ -1,5 +1,6 @@
 [
     "sessions.sql",
     "bonuses.sql",
-    "views.sql"
+    "views.sql",
+    "constraints.sql"
 ]

@@ -13,7 +13,7 @@ export default class UpdateBonusWidgetEvent extends WidgetEvent
     
     async getData()
     {
-        const bonuses_query_string = `SELECT index, slot_name, bet_size, currency, winning FROM bonuses_view WHERE session_id = $1 AND id = $2`;
+        const bonuses_query_string = `SELECT * FROM bonuses_view WHERE session_id = $1 AND id = $2`;
         return await Database.execute(bonuses_query_string, [ this.session_id, this.bonus_id ], { one_response: true });
     }
 };

@@ -41,9 +41,9 @@
             </tr>
         </thead>
         <tbody>
-            <% for (const { id, index, nickname, slot_name, bet_size, currency, winning } of bonuses)
+            <% for (const { id, index, nickname, slot_name, bet_size, currency, winning, is_active } of bonuses)
             { %>
-                <tr>
+                <tr class="<%=(is_active && session.mode == 'START') ? 'active' : ''%>">
                     <td>
                         <input type="text" name="nickname" placeholder="nickname/id" value="<%=nickname%>" form="bonus_<%=id%>" required>
                     </td>
@@ -56,7 +56,7 @@
                     </td>
                     <td>
                         <% const readonly = (session.mode != "START" ? "readonly" : ''); %>
-                        <input type="number" name="winning" min="0" placeholder="?" value="<%=winning%>" form="bonus_<%=id%>" <%=readonly%> required>
+                        <input type="number" name="winning" min="0" placeholder="?" value="<%=winning%>" form="bonus_<%=id%>" <%=readonly%>>
                     </td>
                     <td>
                         <%=(winning / bet_size).toFixed(2)%>

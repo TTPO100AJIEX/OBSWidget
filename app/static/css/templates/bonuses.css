@@ -23,7 +23,8 @@ main > form:nth-of-type(3) { grid-column: 1 / -1; }
 
 table { grid-column: 1 / -1; white-space: nowrap; }
 td * { display: inline-block; }
-table input { width: 10ch; background: transparent; border: none; }
 table button { vertical-align: middle; }
 table button:last-child { margin-left: var(--sizing-regular); }
+table input { width: 10ch; background: transparent; border: none; }
+tr.active > td { background: hsl(134, 41%, 88%); border-color: hsl(134, 41%, 83%); }
 table button > img { display: block; height: calc(var(--interactive-min-height) - 2 * var(--padding-vertical-regular)); }

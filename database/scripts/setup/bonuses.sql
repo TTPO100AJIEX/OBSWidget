@@ -7,7 +7,7 @@ CREATE TABLE bonuses
     slot_name TEXT NOT NULL,
     currency CURRENCY NOT NULL,
     bet_size INT NOT NULL CHECK (bet_size >= 0),
-    winning INT NOT NULL CHECK (winning >= 0) DEFAULT 0
+    winning INT CHECK (winning >= 0)
 );
 
 CREATE INDEX bonuses_session_id_index ON bonuses(session_id);

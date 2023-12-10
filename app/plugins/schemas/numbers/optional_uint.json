@@ -1,0 +1,6 @@
+{
+    "$id": "optional_uint",
+    "type": "integer",
+    "nullable": true,
+    "minimum": 0
+}

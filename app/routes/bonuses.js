@@ -3,6 +3,7 @@ import { Database } from 'common/databases/PostgreSQL/PostgreSQL.js';
 import InsertBonusWidgetEvent from './widget_events/InsertBonusWidgetEvent.js';
 import UpdateBonusWidgetEvent from './widget_events/UpdateBonusWidgetEvent.js';
 import DeleteBonusWidgetEvent from './widget_events/DeleteBonusWidgetEvent.js';
+import ActiveBonusWidgetEvent from './widget_events/ActiveBonusWidgetEvent.js';
 import SessionUpdateWidgetEvent from './widget_events/SessionUpdateWidgetEvent.js';
 
 async function register(app, options)
@@ -22,12 +23,13 @@ async function register(app, options)
     };
     app.get("/session/:session_id", { schema: GET_SCHEMA, config: { access: "authorization" } }, async (req, res) =>
     {
-        const bonuses_query_string = `SELECT id, index, nickname, slot_name, bet_size, currency, winning FROM bonuses_view WHERE session_id = %L`;
-        const session_query_string = `SELECT id, balance, currency, mode, is_on FROM sessions_view WHERE id = %L`;
+        const bonuses_query_string = `SELECT * FROM bonuses_view WHERE session_id = %L`;
+        const session_query_string = `SELECT * FROM sessions_view WHERE id = %L`;
         const batch = new Database.AnonymousBatch();
         batch.execute(Database.format(bonuses_query_string, req.params.session_id));
         batch.execute({ query: Database.format(session_query_string, req.params.session_id), one_response: true });
         const [ bonuses, session ] = await batch.commit();
+        if (!session) throw 404;
         return res.render("general/layout.ejs", { template: "bonuses", session, bonuses });
     });
     
@@ -106,7 +108,7 @@ async function register(app, options)
                 "slot_name": { type: "string" },
                 "bet_size": { $ref: "uint" },
                 // "currency": { $ref: "currency" },
-                "winning": { $ref: "uint" },
+                "winning": { $ref: "optional_uint" },
                 "update": { type: "boolean" },
                 "delete": { type: "boolean" },
                 "authentication": { $ref: "authentication" }
@@ -127,12 +129,18 @@ async function register(app, options)
             const query_string = `UPDATE bonuses SET (nickname, slot_name, bet_size, currency, winning) = ($1, $2, $3, $4, $5) WHERE id = $6 AND session_id = $7`;
             await Database.execute(query_string, [ nickname, slot_name, bet_size, currency, winning, req.body.id, req.params.session_id ]);
             await new UpdateBonusWidgetEvent(req.params.session_id, req.body.id).dispatch();
+            if (winning)
+            {
+                await new ActiveBonusWidgetEvent(req.params.session_id).dispatch(); // is_active may change
+                await new SessionUpdateWidgetEvent(req.params.session_id).dispatch(); // The mode may switch
+            }
         }
         else
         {
             const query_string = `INSERT INTO bonuses (session_id, nickname, slot_name, bet_size, currency) VALUES ($1, $2, $3, $4, $5)`;
             await Database.execute(query_string, [ req.params.session_id, nickname, slot_name, bet_size, currency ]);
             await new InsertBonusWidgetEvent(req.params.session_id).dispatch();
+            await new SessionUpdateWidgetEvent(req.params.session_id).dispatch(); // The mode may switch
         }
         return res.status(303).redirect(`/session/${req.params.session_id}`);
     });

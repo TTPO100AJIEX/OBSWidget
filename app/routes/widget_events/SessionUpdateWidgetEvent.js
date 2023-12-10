@@ -7,7 +7,7 @@ export default class SessionUpdateWidgetEvent extends WidgetEvent
     
     async getData()
     {
-        const session_query_string = `SELECT id, balance, currency, mode, is_on FROM sessions_view WHERE id = $1`;
+        const session_query_string = `SELECT * FROM sessions_view WHERE id = $1`;
         return await Database.execute(session_query_string, [ this.session_id ], { one_response: true });
     }
 };

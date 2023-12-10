@@ -4,7 +4,7 @@ async function register(app, options)
 {
     app.get("/sessions", { config: { access: "authorization" } }, async (req, res) =>
     {
-        const sessions = await Database.execute(`SELECT id, balance, currency, bonuses, created FROM sessions_view ORDER BY id DESC`);
+        const sessions = await Database.execute(`SELECT * FROM sessions_view ORDER BY id DESC`);
         return res.render("general/layout.ejs", { template: "sessions", sessions });
     });
 
