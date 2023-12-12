@@ -99,7 +99,7 @@ async function register(app, options)
         body:
         {
             type: "object",
-            required: [ "nickname", "slot_name", "bet_size", /*"currency",*/ "authentication" ],
+            required: [ "nickname", "slot_name", "bet_size", "currency", "authentication" ],
             additionalProperties: false,
             properties:
             {
@@ -107,7 +107,7 @@ async function register(app, options)
                 "nickname": { type: "string" },
                 "slot_name": { type: "string" },
                 "bet_size": { $ref: "uint" },
-                // "currency": { $ref: "currency" },
+                "currency": { $ref: "currency" },
                 "winning": { $ref: "optional_uint" },
                 "update": { type: "boolean" },
                 "delete": { type: "boolean" },

@@ -218,6 +218,7 @@
                                     "nickname",
                                     "slot_name",
                                     "bet_size",
+                                    "currency",
                                     "authentication"
                                 ],
                                 "additionalProperties": false,
@@ -233,6 +234,9 @@
                                     },
                                     "bet_size": {
                                         "$ref": "#/components/schemas/def-5"
+                                    },
+                                    "currency": {
+                                        "$ref": "#/components/schemas/def-1"
                                     },
                                     "winning": {
                                         "$ref": "#/components/schemas/def-3"
