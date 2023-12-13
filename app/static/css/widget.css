@@ -20,9 +20,9 @@ main > div:nth-of-type(2)
     display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr; background: var(--background-color); border-radius: var(--border-radius-regular);
     margin-top: var(--margin-vertical-big); padding: var(--padding-vertical-regular) 0;
     
-    & > span { padding-top: calc(var(--padding-vertical-regular) + 10px); position: relative; text-align: center; }
-    & > hr{ height: 100%; margin: 0; }
-    & > span::before
+    & > div { padding-top: calc(var(--padding-vertical-regular) + 10px); position: relative; text-align: center; min-height: 2em; }
+    & > hr { height: 100%; margin: 0; }
+    & > div::before
     {
         content: ''; height: 30px; aspect-ratio: 1 / 1; background-size: cover; background-repeat: no-repeat;
         position: absolute; left: 50%; top: 0; transform: translate(-50%, calc(-50% - var(--padding-vertical-regular)));
@@ -37,8 +37,8 @@ main > div:nth-of-type(3)
     margin-top: var(--margin-vertical-regular); padding: var(--padding-regular);
     background: var(--background-color); border-radius: var(--border-radius-regular);
 
-    & > span { display: flex; align-items: center; gap: var(--sizing-regular); }
-    & > span::before { content: ''; height: 1em; aspect-ratio: 1 / 1; background: center / contain no-repeat; }
+    & > div { display: flex; align-items: center; gap: var(--sizing-regular); min-height: 1.33em; }
+    & > div::before { content: ''; height: 1em; aspect-ratio: 1 / 1; background: center / contain no-repeat; }
     #max_winning::before { background-image: url("/static/images/widget/stats/max_winning.svg"); }
     #min_winning::before { background-image: url("/static/images/widget/stats/min_winning.svg"); }
 }
@@ -51,8 +51,9 @@ main > div:last-child
     & span
     {
         display: flex; align-items: center; width: 100%; padding: 0 calc(var(--padding-horizontal-big) + 15px); border-radius: var(--border-radius-regular);
-        --transitioned: font-size, box-shadow, padding, margin, transform; transition-duration: 10s;
+        --transitioned: font-size, box-shadow, padding, margin, transform; transition-duration: 0.3s;
     }
+    & > div > div { padding-bottom: 1em; }
 }
 
 @keyframes main_animation
@@ -60,9 +61,8 @@ main > div:last-child
     0% { translate: 0 0; }
     100% { translate: 0 -100%; }
 }
-#main_mode > div > div:has(> :nth-child(10)) { animation: linear .25s infinite main_animation; }
+#main_mode > div > div:has(> :nth-child(10)) { animation: linear 15s infinite main_animation; }
 #main_mode > div > div:nth-child(2):not(:has(> :nth-child(10))) { display: none; }
-#main_mode > div > div { padding-bottom: 1em; }
 
 #start_mode span
 {
@@ -75,3 +75,4 @@ main > div:last-child
     }
     &.active:first-child { margin-top: 0; }
 }
+#start_mode > div > div:nth-child(2) > span:is(.hide_after, .hide_after ~ span) { display: none; }

@@ -58,7 +58,7 @@ async function register(app, options)
                 "report-uri": [ "/csp-violation-report" ],
                 "report-to": [ "obswidget" ],
                 "require-trusted-types-for": [ "'script'" ],
-                "trusted-types": [ "nbsp" ],
+                "trusted-types": [ ],
                 "upgrade-insecure-requests": [ ]
             }
         },

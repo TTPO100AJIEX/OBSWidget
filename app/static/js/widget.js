@@ -1,27 +1,15 @@
-const min_x = document.getElementById("min_x");
-const sum_deposit = document.getElementById("sum_deposit");
-const bonus_amount = document.getElementById("bonus_amount");
+const min_x = document.getElementById("min_x").children[0];
+const sum_deposit = document.getElementById("sum_deposit").children[0];
+const bonus_amount = document.getElementById("bonus_amount").children[0];
 
-const max_winning = document.getElementById("max_winning");
-const min_winning = document.getElementById("min_winning");
+const max_winning = document.getElementById("max_winning").children[0];
+const min_winning = document.getElementById("min_winning").children[0];
 
+var bonuses = [ ];
 const mode = document.getElementById("mode");
 
 const connection = new EventSource(location.pathname + "/data");
-function dispatchEvent(type, data)
-{
-    connection.dispatchEvent(Object.assign(new Event(type), { data }));
-}
-
-const nbsp_trusted_policy = trustedTypes.createPolicy("nbsp", { createHTML: input => input });
-const nbsp = nbsp_trusted_policy.createHTML("&nbsp;");
-
-var bonuses = [ ], is_on = false;
-
-connection.addEventListener("error", ev =>
-{
-    console.log(ev);
-});
+function dispatchEvent(type, data) { connection.dispatchEvent(Object.assign(new Event(type), { data })); }
 
 connection.addEventListener("data", ev =>
 {
@@ -36,39 +24,30 @@ connection.addEventListener("data", ev =>
 connection.addEventListener("session_update", ev =>
 {
     const data = JSON.parse(ev.data);
-    is_on = data.is_on;
-
-    if (!is_on)
-    {
-        min_x.innerHTML = nbsp;
-        sum_deposit.innerHTML = nbsp;
-        bonus_amount.innerHTML = nbsp;
-
-        min_winning.innerHTML = nbsp;
-        max_winning.innerHTML = nbsp;
-        
-        for (const child of mode.children) child.remove();
-        mode.id = "mode";
-        return;
-    }
-
-    const id = data.mode.toLowerCase() + "_mode";
     sum_deposit.innerText = data.balance;
-    if (mode.id != id)
-    {
-        mode.id = id;
-        mode.replaceChildren();
-        
-        if (id == "main_mode")
-        {
-            const container = mode.appendChild(document.createElement("div"));
-            container.appendChild(document.createElement("div"));
-            container.appendChild(document.createElement("div"));
-        }
+    mode.id = data.mode.toLowerCase() + "_mode";
 
-        const save_bonuses = bonuses;
-        bonuses = [ ];
-        for (const bonus of save_bonuses) dispatchEvent("insert_bonus", JSON.stringify(bonus));
+    if (!data.is_on)
+    {
+        min_x.hidden = true;
+        sum_deposit.hidden = true;
+        bonus_amount.hidden = true;
+
+        min_winning.hidden = true;
+        max_winning.hidden = true;
+        
+        mode.hidden = true;
+    }
+    else
+    {
+        min_x.hidden = false;
+        sum_deposit.hidden = false;
+        bonus_amount.hidden = false;
+
+        min_winning.hidden = false;
+        max_winning.hidden = false;
+        
+        mode.hidden = false;
     }
 });
 
@@ -84,15 +63,18 @@ function buildBonusText({ index, slot_name = "", bet_size, currency, winning } =
 function buildBonus(data, span = null)
 {
     if (!span) span = document.createElement("span");
+    const split_index = Math.max(data.index - 2, 0);
     span.innerText = buildBonusText(data);
     if (data.is_active)
     {
         span.classList.add("active");
-        mode.style.setProperty("--hidden-items", data.index - 2);
+        mode.style.setProperty("--hidden-items", split_index);
+        mode.children[0].children[1].children[split_index]?.classList.add("hide_after");
     }
     else
     {
         span.classList.remove("active");
+        mode.children[0].children[1].children[split_index]?.classList.remove("hide_after");
     }
     return span;
 }
@@ -100,7 +82,7 @@ function buildBonus(data, span = null)
 function updateBonusStats()
 {
     bonus_amount.innerText = bonuses.length;
-    min_x.innerText = Math.min(...bonuses.map(bonus => bonus.winning / bonus.bet_size)).toFixed(2);
+    min_x.innerText = Math.min(...bonuses.filter(bonus => bonus.winning).map(bonus => bonus.winning / bonus.bet_size)).toFixed(2);
 
     const sorted = bonuses.toSorted((a, b) => b.winning - a.winning);
     buildBonus(sorted.at(-1), min_winning);
@@ -112,16 +94,8 @@ connection.addEventListener("insert_bonus", ev =>
     const data = JSON.parse(ev.data);
     bonuses.push(data);
     updateBonusStats();
-    switch (mode.id)
-    {
-        case "main_mode":
-            mode.children[0].children[0].appendChild(buildBonus(data));
-            mode.children[0].children[1].appendChild(buildBonus(data));
-            break;
-        case "start_mode":
-            mode.appendChild(buildBonus(data));
-            break;
-    }
+    mode.children[0].children[0].appendChild(buildBonus(data));
+    mode.children[0].children[1].appendChild(buildBonus(data));
 });
 
 connection.addEventListener("update_bonus", ev =>
@@ -129,16 +103,8 @@ connection.addEventListener("update_bonus", ev =>
     const data = JSON.parse(ev.data);
     bonuses[data.index - 1] = data;
     updateBonusStats();
-    switch (mode.id)
-    {
-        case "main_mode":
-            buildBonus(data, mode.children[0].children[0].children[data.index - 1]);
-            buildBonus(data, mode.children[0].children[1].children[data.index - 1]);
-            break;
-        case "start_mode":
-            buildBonus(data, mode.children[data.index - 1]);
-            break;
-    }
+    buildBonus(data, mode.children[0].children[0].children[data.index - 1]);
+    buildBonus(data, mode.children[0].children[1].children[data.index - 1]);
 });
 
 connection.addEventListener("delete_bonus", ev =>
@@ -146,16 +112,8 @@ connection.addEventListener("delete_bonus", ev =>
     const data = JSON.parse(ev.data);
     bonuses.splice(data.index - 1, 1);
     updateBonusStats();
-    switch (mode.id)
-    {
-        case "main_mode":
-            mode.children[0].children[0].children[data.index - 1].remove();
-            mode.children[0].children[1].children[data.index - 1].remove();
-            break;
-        case "start_mode":
-            mode.children[data.index - 1].remove();
-            break;
-    }
+    mode.children[0].children[0].children[data.index - 1].remove();
+    mode.children[0].children[1].children[data.index - 1].remove();
     for (let i = 0; i < bonuses.length; i++)
     {
         bonuses[i].index = i + 1;
