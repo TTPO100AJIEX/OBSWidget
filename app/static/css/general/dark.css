@@ -28,7 +28,7 @@
 
 body { font-family: 'Inconsolata'; }
 input { border: thin solid transparent; }
-button { box-shadow: 0 5px 0 var(--box-shadow-color); }
+button:hover { box-shadow: 0 5px 0 var(--box-shadow-color); }
 h1 { font-weight: 400; text-shadow: 0px 0px 50px var(--border-color); }
 
 body { display: flex; place-items: center; place-content: center; }
