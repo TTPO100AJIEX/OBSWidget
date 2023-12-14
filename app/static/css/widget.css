@@ -75,4 +75,4 @@ main > div:last-child
     }
     &.active:first-child { margin-top: 0; }
 }
-#start_mode > div > div:nth-child(2) > span:is(.hide_after, .hide_after ~ span) { display: none; }
+#start_mode > div > div:nth-child(2) > span:is(.hide_after, .hide_after ~ span) { opacity: 0; }

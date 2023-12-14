@@ -13,7 +13,7 @@ export default class DeleteBonusWidgetEvent extends WidgetEvent
     
     async getData()
     {
-        const bonuses_query_string = `SELECT MIN(index) AS index FROM bonuses_view WHERE session_id = $1 AND id > $2`;
+        const bonuses_query_string = `SELECT COALESCE(MIN(index) FILTER (WHERE id > $2), MAX(index) + 1) AS index FROM bonuses_view WHERE session_id = $1`;
         return await Database.execute(bonuses_query_string, [ this.session_id, this.bonus_id ], { one_response: true });
     }
 };
