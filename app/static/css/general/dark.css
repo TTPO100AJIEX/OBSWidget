@@ -32,7 +32,7 @@ button:hover { box-shadow: 0 5px 0 var(--box-shadow-color); }
 h1 { font-weight: 400; text-shadow: 0px 0px 50px var(--border-color); }
 
 body { display: flex; place-items: center; place-content: center; }
-main { background: var(--surface-color); padding: var(--padding-big); width: min-content; border-radius: var(--border-radius-regular); }
+main { background: var(--surface-color); padding: var(--padding-big); width: min-content; border: thin solid var(--border-color); border-radius: var(--border-radius-regular); }
 
 hr.rotated { --angle: 0deg; }
 hr { background: linear-gradient(var(--angle, 90deg), rgba(153, 64, 222, 0.00) -1.25%, #A750FC 50.53%, rgba(153, 64, 222, 0.00) 101.25%); }
