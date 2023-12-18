@@ -8,6 +8,8 @@ const min_winning = document.getElementById("min_winning").children[0];
 var bonuses = [ ];
 const mode = document.getElementById("mode");
 
+const currencies = { ROUBLE: "₽", DOLLAR: "$", EURO: "€" };
+
 const connection = new EventSource(location.pathname + "/data");
 function dispatchEvent(type, data) { connection.dispatchEvent(Object.assign(new Event(type), { data })); }
 
@@ -24,7 +26,7 @@ connection.addEventListener("data", ev =>
 connection.addEventListener("session_update", ev =>
 {
     const data = JSON.parse(ev.data);
-    sum_deposit.innerText = data.balance;
+    sum_deposit.innerText = data.balance + currencies[data.currency];
     mode.id = data.mode.toLowerCase() + "_mode";
 
     if (!data.is_on)
@@ -52,12 +54,11 @@ connection.addEventListener("session_update", ev =>
 });
 
 
-const currencies = { ROUBLE: "₽", DOLLAR: "$", EURO: "€" };
 function buildBonusText({ index, slot_name = "", bet_size, currency, winning } = { })
 {
     currency = currencies[currency];
     if (slot_name.length > 17) slot_name = slot_name.slice(0, 17) + "...";
-    return `${index}. ${slot_name} (${bet_size}${currency}) = ${winning ?? 0}`;
+    return `${index}. ${slot_name} (${bet_size}${currency}) = ${winning ?? 0}${currency}`;
 }
 
 function buildBonus(data, span = null)
