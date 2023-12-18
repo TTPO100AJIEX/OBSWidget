@@ -21,7 +21,6 @@
     <div class="surface">Количество бонусок: <%=bonuses.length%></div>
 
     <form method="POST" action="/session/<%=session.id%>/bonus">
-        <input type="text" name="nickname" placeholder="NickName/ID" required>
         <input type="text" name="slot_name" placeholder="Название слота" required>
         <input type="hidden" name="authentication" value="<%=req.authentication_code%>">
         <input type="number" name="bet_size" min="0" placeholder="Размер ставки" required>
@@ -32,7 +31,6 @@
     <table>
         <thead>
             <tr>
-                <th>Nickname/ID</th>
                 <th>Название слота</th>
                 <th>Стоимость бонуски</th>
                 <th>Выигрыш</th>
@@ -41,12 +39,9 @@
             </tr>
         </thead>
         <tbody>
-            <% for (const { id, index, nickname, slot_name, bet_size, currency, winning, is_active } of bonuses)
+            <% for (const { id, index, slot_name, bet_size, currency, winning, is_active } of bonuses)
             { %>
                 <tr class="<%=(is_active && session.mode == 'START') ? 'active' : ''%>">
-                    <td>
-                        <input type="text" name="nickname" placeholder="nickname/id" value="<%=nickname%>" form="bonus_<%=id%>" required>
-                    </td>
                     <td>
                         <%=index%>. <input type="text" name="slot_name" value="<%=slot_name%>" form="bonus_<%=id%>" required>
                     </td>

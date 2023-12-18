@@ -99,12 +99,11 @@ async function register(app, options)
         body:
         {
             type: "object",
-            required: [ "nickname", "slot_name", "bet_size", "currency", "authentication" ],
+            required: [ "slot_name", "bet_size", "currency", "authentication" ],
             additionalProperties: false,
             properties:
             {
                 "id": { $ref: "positive_int" },
-                "nickname": { type: "string" },
                 "slot_name": { type: "string" },
                 "bet_size": { $ref: "uint" },
                 "currency": { $ref: "currency" },
@@ -117,7 +116,7 @@ async function register(app, options)
     };
     app.post("/session/:session_id/bonus", { schema: BONUS_POST_SCHEMA, config: { access: "authorization" } }, async (req, res) =>
     {
-        const { nickname, slot_name, bet_size, currency = "ROUBLE", winning } = req.body;
+        const { slot_name, bet_size, currency = "ROUBLE", winning } = req.body;
         if (req.body.delete)
         {
             const query_string = `DELETE FROM bonuses WHERE id = $1 AND session_id = $2`;
@@ -126,8 +125,8 @@ async function register(app, options)
         }
         else if (req.body.update)
         {
-            const query_string = `UPDATE bonuses SET (nickname, slot_name, bet_size, currency, winning) = ($1, $2, $3, $4, $5) WHERE id = $6 AND session_id = $7`;
-            await Database.execute(query_string, [ nickname, slot_name, bet_size, currency, winning, req.body.id, req.params.session_id ]);
+            const query_string = `UPDATE bonuses SET (slot_name, bet_size, currency, winning) = ($1, $2, $3, $4, $5) WHERE id = $6 AND session_id = $7`;
+            await Database.execute(query_string, [ slot_name, bet_size, currency, winning, req.body.id, req.params.session_id ]);
             await new UpdateBonusWidgetEvent(req.params.session_id, req.body.id).dispatch();
             if (winning)
             {
@@ -137,8 +136,8 @@ async function register(app, options)
         }
         else
         {
-            const query_string = `INSERT INTO bonuses (session_id, nickname, slot_name, bet_size, currency) VALUES ($1, $2, $3, $4, $5)`;
-            await Database.execute(query_string, [ req.params.session_id, nickname, slot_name, bet_size, currency ]);
+            const query_string = `INSERT INTO bonuses (session_id, slot_name, bet_size, currency) VALUES ($1, $2, $3, $4, $5)`;
+            await Database.execute(query_string, [ req.params.session_id, slot_name, bet_size, currency ]);
             await new InsertBonusWidgetEvent(req.params.session_id).dispatch();
             await new SessionUpdateWidgetEvent(req.params.session_id).dispatch(); // The mode may switch
         }

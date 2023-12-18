@@ -141,7 +141,6 @@ paths:
             schema:
               type: object
               required:
-                - nickname
                 - slot_name
                 - bet_size
                 - currency
@@ -150,8 +149,6 @@ paths:
               properties:
                 id:
                   $ref: "#/components/schemas/def-4"
-                nickname:
-                  type: string
                 slot_name:
                   type: string
                 bet_size:
