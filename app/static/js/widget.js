@@ -53,19 +53,15 @@ connection.addEventListener("session_update", ev =>
     }
 });
 
-
-function buildBonusText({ index, slot_name = "", bet_size, currency, winning } = { })
-{
-    currency = currencies[currency];
-    if (slot_name.length > 17) slot_name = slot_name.slice(0, 17) + "...";
-    return `${index}. ${slot_name} (${bet_size}${currency}) = ${winning ?? 0}${currency}`;
-}
-
 function buildBonus(data, span = null)
 {
     if (!span) span = document.createElement("span");
+    
+    const currency = currencies[data.currency];
+    const parts = [ `${data.index}.`,  data.slot_name, `(${data.bet_size}${currency}) = ${data.winning ?? 0}${currency}` ];
+    span.replaceChildren(...parts.map(part => { const text_part = document.createElement("span"); text_part.innerText = part; return text_part; }))
+
     const split_index = Math.max(data.index - 2, 0);
-    span.innerText = buildBonusText(data);
     if (data.is_active)
     {
         span.classList.add("active");

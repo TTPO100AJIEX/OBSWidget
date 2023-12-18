@@ -47,12 +47,13 @@ main > div:last-child
     position: relative; width: calc(100% + 2 * var(--padding-horizontal-big) + 30px);
     overflow: hidden; left: calc(-1 * var(--padding-horizontal-big) - 15px);
     
-    & span
-    {
-        display: flex; align-items: center; width: 100%; padding: 0 calc(var(--padding-horizontal-big) + 15px); border-radius: var(--border-radius-regular);
-        --transitioned: font-size, box-shadow, padding, margin, transform; transition-duration: 0.3s;
-    }
     & > div > div { padding-bottom: 1em; }
+    & > div > div > span
+    {
+        display: flex; align-items: center; width: 100%; gap: 1ch; padding: 0 calc(var(--padding-horizontal-big) + 15px); border-radius: var(--border-radius-regular);
+        white-space: nowrap; --transitioned: font-size, box-shadow, padding, margin, transform; transition-duration: 0.3s;
+    }
+    & > div > div > span > span:nth-child(2) { text-overflow: ellipsis; overflow: hidden; }
 }
 
 @keyframes main_animation
@@ -63,13 +64,13 @@ main > div:last-child
 #main_mode > div > div:has(> :nth-child(10)) { animation: linear 15s infinite main_animation; }
 #main_mode > div > div:nth-child(2):not(:has(> :nth-child(10))) { display: none; }
 
-#start_mode span
+#start_mode > div > div > span
 {
     --offset: calc(-1 * max(var(--hidden-items), 0) * var(--font-size-medium) * var(--line-height)); transform: translateY(var(--offset));
 
     &.active
     {
-        background-color: var(--brand-color); box-shadow: 0 5px 0 var(--box-shadow-color); font-size: calc(1.5 * var(--font-size-medium));
+        background-color: var(--brand-color); box-shadow: 0 5px 0 var(--box-shadow-color); font-size: calc(1.4 * var(--font-size-medium));
         padding-top: var(--padding-vertical-big); padding-bottom: var(--padding-vertical-big); margin: var(--margin-vertical-regular) 0;
     }
     &.active:first-child { margin-top: 0; }

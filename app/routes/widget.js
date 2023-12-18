@@ -16,7 +16,7 @@ async function register(app, options)
             }
         }
     };
-    app.get("/session/:session_id/widget", { schema: GET_SCHEMA, config: { access: "authorization" } }, async (req, res) => res.render("widget.ejs"));
+    app.get("/session/:session_id/widget", { schema: GET_SCHEMA, config: { access: "public" } }, async (req, res) => res.render("widget.ejs"));
 
     
     const SSE_SCHEMA =
@@ -32,7 +32,7 @@ async function register(app, options)
             }
         }
     };
-    app.get("/session/:session_id/widget/data", { schema: SSE_SCHEMA, config: { access: "authorization" } }, async (req, res) =>
+    app.get("/session/:session_id/widget/data", { schema: SSE_SCHEMA, config: { access: "public" } }, async (req, res) =>
     {
         WidgetEvent.registerConnection(res, req.socket, req.params.session_id);
         await new DataWidgetEvent(req.params.session_id).dispatch(res);
