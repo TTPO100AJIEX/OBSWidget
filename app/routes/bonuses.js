@@ -125,7 +125,7 @@ async function register(app, options)
         }
         else if (req.body.update)
         {
-            const query_string = `UPDATE bonuses SET (slot_name, bet_size, currency, winning) = ($1, $2, $3, $4, $5) WHERE id = $6 AND session_id = $7`;
+            const query_string = `UPDATE bonuses SET (slot_name, bet_size, currency, winning) = ($1, $2, $3, $4) WHERE id = $5 AND session_id = $6`;
             await Database.execute(query_string, [ slot_name, bet_size, currency, winning, req.body.id, req.params.session_id ]);
             await new UpdateBonusWidgetEvent(req.params.session_id, req.body.id).dispatch();
             if (winning)
@@ -136,7 +136,7 @@ async function register(app, options)
         }
         else
         {
-            const query_string = `INSERT INTO bonuses (session_id, slot_name, bet_size, currency) VALUES ($1, $2, $3, $4, $5)`;
+            const query_string = `INSERT INTO bonuses (session_id, slot_name, bet_size, currency) VALUES ($1, $2, $3, $4)`;
             await Database.execute(query_string, [ req.params.session_id, slot_name, bet_size, currency ]);
             await new InsertBonusWidgetEvent(req.params.session_id).dispatch();
             await new SessionUpdateWidgetEvent(req.params.session_id).dispatch(); // The mode may switch
