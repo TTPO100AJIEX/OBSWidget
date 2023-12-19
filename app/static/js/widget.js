@@ -30,6 +30,8 @@ connection.addEventListener("data", ev =>
     
     mode.id = "mode";
     mode.hidden = (!data.is_on);
+    mode.children[0].children[0].replaceChildren();
+    mode.children[0].children[1].replaceChildren();
     
     bonuses = [ ];
     dispatchEvent("session_update", ev.data);
