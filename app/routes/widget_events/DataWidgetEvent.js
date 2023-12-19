@@ -7,13 +7,11 @@ export default class DataWidgetEvent extends WidgetEvent
     
     async getData()
     {
-        const bonuses_query_string = `SELECT * FROM bonuses_view WHERE session_id = %L`;
-        const session_query_string = `SELECT * FROM sessions_view WHERE id = %L`;
         const batch = new Database.AnonymousBatch();
-        batch.execute(Database.format(bonuses_query_string, this.session_id));
-        batch.execute({ query: Database.format(session_query_string, this.session_id), one_response: true });
+        batch.execute(`SELECT * FROM bonuses_view WHERE is_on`);
+        batch.execute({ query: `SELECT * FROM sessions_view WHERE is_on`, one_response: true });
         const [ bonuses, session ] = await batch.commit();
-        if (!session.is_on) return undefined;
+        if (!session) return { is_on: false };
         return { ...session, bonuses };
     }
 };

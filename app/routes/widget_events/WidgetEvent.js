@@ -1,14 +1,13 @@
 export default class WidgetEvent
 {
-    static connections = new Map();
+    static connections = [ ];
     static get type() { throw 'WidgetEvent::type - Not Implemented'; }
-    static async registerConnection(connection, socket, session_id)
+    static async registerConnection(connection, socket)
     {
-        (this.connections[session_id] ??= [ ]).push(connection);
+        this.connections.push(connection);
         socket.on('close', () => connection.closed = true);
     }
 
-    constructor(session_id) { this.session_id = session_id; }
     async getData() { throw 'WidgetEvent::getData - Not Implemented'; }
 
     async dispatch(connection)
@@ -17,10 +16,9 @@ export default class WidgetEvent
         const event = this.constructor.type;
         if (!data) return;
         
-        WidgetEvent.connections[this.session_id] ??= [ ];
-        WidgetEvent.connections[this.session_id] = WidgetEvent.connections[this.session_id].filter(connection => !connection.closed);
-        
+        WidgetEvent.connections = WidgetEvent.connections.filter(connection => !connection.closed);
+
         if (connection) return connection.sse({ event, data });
-        for (const connection of WidgetEvent.connections[this.session_id]) connection.sse({ event, data });
+        for (const connection of WidgetEvent.connections) connection.sse({ event, data });
     }
 };

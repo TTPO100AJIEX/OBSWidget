@@ -1,9 +1,10 @@
 CREATE VIEW bonuses_view AS
     SELECT
-        *,
-        ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY id) AS index,
-	    (ROW_NUMBER() OVER (PARTITION BY (session_id, winning) ORDER BY id) = 1) AND winning IS NULL AS is_active
-    FROM bonuses ORDER BY id;
+        bonuses.*, sessions.is_on,
+        ROW_NUMBER() OVER (PARTITION BY bonuses.session_id ORDER BY bonuses.id) AS index,
+        (ROW_NUMBER() OVER (PARTITION BY (bonuses.session_id, bonuses.winning) ORDER BY bonuses.id) = 1) AND bonuses.winning IS NULL AS is_active
+    FROM bonuses INNER JOIN sessions ON sessions.id = bonuses.session_id
+    ORDER BY id;
 
 CREATE VIEW sessions_view AS
     SELECT

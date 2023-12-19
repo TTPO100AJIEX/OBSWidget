@@ -253,25 +253,13 @@ paths:
       responses:
         "200":
           description: Default Response
-  /session/{session_id}/widget:
+  /widget:
     get:
-      parameters:
-        - schema:
-            $ref: "#/components/schemas/def-4"
-          in: path
-          name: session_id
-          required: true
       responses:
         "200":
           description: Default Response
-  /session/{session_id}/widget/data:
+  /widget/data:
     get:
-      parameters:
-        - schema:
-            $ref: "#/components/schemas/def-4"
-          in: path
-          name: session_id
-          required: true
       responses:
         "200":
           description: Default Response

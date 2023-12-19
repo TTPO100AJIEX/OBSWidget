@@ -78,7 +78,7 @@ async function register(app, options)
         const query_string = Database.format(`UPDATE sessions SET (${keys}) = ROW(${values}) WHERE id = $1`, ...Object.keys(updates));
         await Database.execute(query_string, [ req.params.session_id, ...Object.values(updates) ]);
 
-        if (req.body.on) await new DataWidgetEvent(req.params.session_id).dispatch();
+        if (req.body.on || req.body.off) await new DataWidgetEvent().dispatch();
         else await new SessionUpdateWidgetEvent(req.params.session_id).dispatch();
 
         return res.status(303).redirect(`/session/${req.params.session_id}`);

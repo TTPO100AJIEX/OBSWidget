@@ -7,13 +7,14 @@ export default class UpdateBonusWidgetEvent extends WidgetEvent
 
     constructor(session_id, bonus_id)
     {
-        super(session_id);
+        super();
         this.bonus_id = bonus_id;
+        this.session_id = session_id;
     }
     
     async getData()
     {
-        const bonuses_query_string = `SELECT * FROM bonuses_view WHERE session_id = $1 AND id = $2`;
+        const bonuses_query_string = `SELECT * FROM bonuses_view WHERE session_id = $1 AND id = $2 AND is_on`;
         return await Database.execute(bonuses_query_string, [ this.session_id, this.bonus_id ], { one_response: true });
     }
 };

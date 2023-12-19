@@ -1,3 +1,5 @@
+const session_id = document.getElementById("session_id");
+
 const min_x = document.getElementById("min_x").children[0];
 const sum_deposit = document.getElementById("sum_deposit").children[0];
 const bonus_amount = document.getElementById("bonus_amount").children[0];
@@ -10,47 +12,37 @@ const mode = document.getElementById("mode");
 
 const currencies = { ROUBLE: "₽", DOLLAR: "$", EURO: "€" };
 
-const connection = new EventSource(location.pathname + "/data");
+const connection = new EventSource("/widget/data");
 function dispatchEvent(type, data) { connection.dispatchEvent(Object.assign(new Event(type), { data })); }
 
 connection.addEventListener("data", ev =>
 {
-    bonuses = [ ];
-    mode.id = "mode";
     const data = JSON.parse(ev.data);
+
+    session_id.hidden = (!data.is_on);
+    
+    min_x.hidden = (!data.is_on);
+    sum_deposit.hidden = (!data.is_on);
+    bonus_amount.hidden = (!data.is_on);
+
+    min_winning.hidden = (!data.is_on);
+    max_winning.hidden = (!data.is_on);
+    
+    mode.id = "mode";
+    mode.hidden = (!data.is_on);
+    
+    bonuses = [ ];
     dispatchEvent("session_update", ev.data);
-    for (const bonus of data.bonuses) dispatchEvent("insert_bonus", JSON.stringify(bonus));
+    for (const bonus of (data.bonuses ?? [ ])) dispatchEvent("insert_bonus", JSON.stringify(bonus));
 });
 
 
 connection.addEventListener("session_update", ev =>
 {
     const data = JSON.parse(ev.data);
+    session_id.innerText = data.id;
     sum_deposit.innerText = data.balance + currencies[data.currency];
-    mode.id = data.mode.toLowerCase() + "_mode";
-
-    if (!data.is_on)
-    {
-        min_x.hidden = true;
-        sum_deposit.hidden = true;
-        bonus_amount.hidden = true;
-
-        min_winning.hidden = true;
-        max_winning.hidden = true;
-        
-        mode.hidden = true;
-    }
-    else
-    {
-        min_x.hidden = false;
-        sum_deposit.hidden = false;
-        bonus_amount.hidden = false;
-
-        min_winning.hidden = false;
-        max_winning.hidden = false;
-        
-        mode.hidden = false;
-    }
+    mode.id = data.mode ? data.mode.toLowerCase() + "_mode" : "mode";
 });
 
 function buildBonus(data, span = null)

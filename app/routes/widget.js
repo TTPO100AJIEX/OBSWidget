@@ -3,39 +3,12 @@ import DataWidgetEvent from './widget_events/DataWidgetEvent.js';
 
 async function register(app, options)
 {
-    const GET_SCHEMA =
-    {
-        params:
-        {
-            type: "object",
-            required: [ "session_id" ],
-            additionalProperties: false,
-            properties:
-            {
-                "session_id": { $ref: "positive_int" }
-            }
-        }
-    };
-    app.get("/session/:session_id/widget", { schema: GET_SCHEMA, config: { access: "public" } }, async (req, res) => res.render("widget.ejs"));
+    app.get("/widget", { config: { access: "public" } }, async (req, res) => res.render("widget.ejs"));
 
-    
-    const SSE_SCHEMA =
+    app.get("/widget/data", { config: { access: "public" } }, async (req, res) =>
     {
-        params:
-        {
-            type: "object",
-            required: [ "session_id" ],
-            additionalProperties: false,
-            properties:
-            {
-                "session_id": { $ref: "positive_int" }
-            }
-        }
-    };
-    app.get("/session/:session_id/widget/data", { schema: SSE_SCHEMA, config: { access: "public" } }, async (req, res) =>
-    {
-        WidgetEvent.registerConnection(res, req.socket, req.params.session_id);
-        await new DataWidgetEvent(req.params.session_id).dispatch(res);
+        WidgetEvent.registerConnection(res, req.socket);
+        await new DataWidgetEvent().dispatch(res);
         res.sse({ data: "OK" });
     });
 }
