@@ -1,4 +1,5 @@
 :root { --line-height: 1.33; }
+body { background: transparent; }
 main
 {
     display: flex; flex-direction: column; width: 500px; height: 590px; padding: calc(2 * var(--padding-vertical-big)) var(--padding-horizontal-big);
