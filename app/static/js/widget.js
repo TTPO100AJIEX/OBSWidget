@@ -75,7 +75,7 @@ function updateBonusStats()
     bonus_amount.innerText = bonuses.length;
     min_x.innerText = Math.min(...bonuses.filter(bonus => bonus.winning).map(bonus => bonus.winning / bonus.bet_size)).toFixed(2);
 
-    const sorted = bonuses.toSorted((a, b) => b.winning - a.winning);
+    const sorted = [ ...bonuses ].sort((a, b) => b.winning - a.winning);
     buildBonus(sorted.at(-1), min_winning);
     buildBonus(sorted[0], max_winning);
 }
