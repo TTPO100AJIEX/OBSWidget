@@ -41,7 +41,7 @@
         <tbody>
             <% for (const { id, index, slot_name, bet_size, currency, winning, is_active } of bonuses)
             { %>
-                <tr class="<%=(is_active && session.mode == 'START') ? 'active' : ''%>">
+                <tr id="<%=id%>" class="<%=(is_active && session.mode == 'START') ? 'active' : ''%>">
                     <td>
                         <%=index%>. <input type="text" name="slot_name" value="<%=slot_name%>" form="bonus_<%=id%>" required>
                     </td>
@@ -68,7 +68,7 @@
     </table>
     <% for (const { id } of bonuses)
     { %>
-        <form id="bonus_<%=id%>" method="POST" action="/session/<%=session.id%>/bonus">
+        <form id="bonus_<%=id%>" method="POST" action="/session/<%=session.id%>/bonus#<%=id%>">
             <input type="hidden" name="authentication" value="<%=req.authentication_code%>">
             <input type="hidden" name="id" value="<%=id%>">
         </form>
