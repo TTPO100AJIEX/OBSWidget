@@ -73,11 +73,15 @@ async function register(app, options)
         if (req.body.balance) updates.balance = req.body.balance;
         if (req.body.currency) updates.currency = req.body.currency;
 
-        const keys = "%I,".repeat(Object.keys(updates).length).slice(0, -1);
-        const values = Object.keys(updates).map((_, index) => `$${index + 2}`).join(',');
-        const query_string = Database.format(`UPDATE sessions SET (${keys}) = ROW(${values}) WHERE id = $1`, ...Object.keys(updates));
-        await Database.execute(query_string, [ req.params.session_id, ...Object.values(updates) ]);
+        const batch = new Database.AnonymousBatch();
+        if (req.body.on) batch.execute(`UPDATE sessions SET is_on = false WHERE is_on`);
 
+        const keys = "%I,".repeat(Object.keys(updates).length).slice(0, -1);
+        const values = "%L,".repeat(Object.keys(updates).length).slice(0, -1);
+        const query_string = `UPDATE sessions SET (${keys}) = ROW(${values}) WHERE id = %L`;
+        batch.execute(Database.format(query_string, ...Object.keys(updates), ...Object.values(updates), req.params.session_id));
+
+        await batch.commit();
         if (req.body.on || req.body.off) await new DataWidgetEvent().dispatch();
         else await new SessionUpdateWidgetEvent(req.params.session_id).dispatch();
 
