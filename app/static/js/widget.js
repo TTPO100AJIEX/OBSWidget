@@ -72,6 +72,8 @@ function buildBonus(data, span = null)
 
 function updateBonusStats()
 {
+    if (bonuses.length >= 10) mode.classList.add("animated");
+    else mode.classList.remove("animated");
     bonus_amount.innerText = bonuses.length;
     min_x.innerText = Math.min(...bonuses.filter(bonus => bonus.winning).map(bonus => bonus.winning / bonus.bet_size)).toFixed(2);
 

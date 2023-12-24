@@ -44,17 +44,17 @@ main > div:last-child > div > div > span > span:nth-child(2) { text-overflow: el
 
 @keyframes main_animation
 {
-    0% { translate: 0 0; }
-    100% { translate: 0 -100%; }
+    0% { transform: none; }
+    100% { transform: translateY(-100%); }
 }
-#main_mode > div > div:has(> :nth-child(10)) { animation: linear 15s infinite main_animation; }
-#main_mode > div > div:nth-child(2):not(:has(> :nth-child(10))) { display: none; }
+#main_mode.animated > div > div { animation: linear 15s infinite main_animation; }
+#main_mode:not(.animated) > div > div:nth-child(2) { display: none; }
 
 #start_mode > div > div > span { --offset: calc(-1 * max(var(--hidden-items), 0) * var(--font-size-medium) * var(--line-height)); transform: translateY(var(--offset)); }
-main > div:last-child .active
+#start_mode .active
 {
     background-color: var(--brand-color); box-shadow: 0 5px 0 var(--box-shadow-color); font-size: calc(1.4 * var(--font-size-medium));
     padding-top: var(--padding-vertical-big); padding-bottom: var(--padding-vertical-big); margin: var(--margin-vertical-regular) 0;
 }
-main > div:last-child .active:first-child { margin-top: 0; }
+#start_mode .active:first-child { margin-top: 0; }
 #start_mode > div > div:nth-child(2) > span:is(.hide_after, .hide_after ~ span) { opacity: 0; }
